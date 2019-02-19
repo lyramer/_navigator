@@ -1,0 +1,27 @@
+.mapStyle {
+  height: 100vh;
+}
+
+body {
+  font-family: Courier, monospace;
+  background: #6b96e6;
+}
+
+.mapContainer {
+  width: calc(100% - 64px);
+}
+
+.leaflet-control-scale-line {
+  border: none;
+  font-size: 18px;
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+  background: transparent none repeat scroll 0% 0%;
+  color: white;
+  box-shadow: none;
+  text-align: center;
+}
+
+div[id^="nav_"] {
+  height: 0px !important;
+}

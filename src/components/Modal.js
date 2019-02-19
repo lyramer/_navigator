@@ -3,9 +3,6 @@ import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class IntroModal extends Component {
-    constructor(props) {
-        super(props);
-    }
     
     render() {
         return(
@@ -15,7 +12,7 @@ class IntroModal extends Component {
               Welcome to CoaX SPECTRAL! This is v0.1 of the map. More information should go here.
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={this.toggle}>View Map</Button>{' '}
+              <Button color="primary" onClick={this.props.toggle}>View Map</Button>{' '}
             </ModalFooter>
             </Modal>
         )

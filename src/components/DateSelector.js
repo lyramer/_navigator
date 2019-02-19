@@ -11,9 +11,6 @@ const calendarStyle = {
   };
   
 class DateSelector extends Component {
-    constructor(props) {
-        super(props);
-    }
     
     render() {
         return(
