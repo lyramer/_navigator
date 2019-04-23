@@ -38,12 +38,13 @@ class CoaxMap extends Component {
         />
 
         <ScaleControl imperial={false} maxWidth={200} />
-
-        <ImageOverlay
-          bounds={[[59.5, -139.001], [47.001, -121.502]]}
-          url={this.props.curOverlay}
-          opacity={this.props.opacity}
-        />
+        {this.props.displayChlor && (
+          <ImageOverlay
+            bounds={[[59.5, -139.001], [47.001, -121.502]]}
+            url={this.props.curOverlay}
+            opacity={0.9}
+          />
+        )}
 
         <Zone isVisible={this.props.zoneVisible} />
 

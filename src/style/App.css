@@ -1,5 +1,5 @@
 .mapStyle {
-  height: 100vh;
+  height: calc(100vh - 100px);
 }
 
 body {
@@ -7,8 +7,12 @@ body {
   background: #6b96e6;
 }
 
+.mapStyle,
+.leaflet-container,
 .mapContainer {
-  width: calc(100% - 64px);
+  height: 100vh;
+  width: 100%;
+  position: relative;
 }
 
 .leaflet-control-scale-line {
@@ -22,6 +26,111 @@ body {
   text-align: center;
 }
 
-div[id^="nav_"] {
-  height: 0px !important;
+.latlon > input {
+  width: 100%;
+}
+
+.add-pin i {
+  font-size: 0.7em;
+  padding-left: 8px;
+}
+
+.latlon-modal .error {
+  font-size: 0.9em;
+  color: #a02d1b;
+  padding-bottom: 15px;
+}
+
+.cal-item {
+  display: inline-block;
+}
+
+.cal-item > * {
+  display: block;
+}
+
+.cal-item input {
+  max-width: 80px;
+}
+
+.navbar {
+  height: 100px;
+  display: flex;
+  background-color: rgba(204, 218, 223, 0.8);
+  color: #3b555e;
+}
+
+.navbar li {
+  list-style: none;
+}
+
+.nav {
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.nav-item i {
+  vertical-align: top;
+  padding-right: 10px;
+  font-size: 2em;
+}
+
+.nav-item form {
+  display: inline-block;
+}
+
+.layer input {
+  margin-right: 5px;
+}
+
+.nav-item input,
+.nav-item label {
+  cursor: pointer;
+  outline: none;
+  margin-bottom: 0;
+}
+
+.info {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1000000000;
+  color: #fff;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.leaflet-bottom {
+  bottom: 100px;
+}
+
+.coordinates {
+  display: flex;
+}
+
+.coordinates .options .btn {
+  margin-right: 10px;
+  padding: 5px 10px;
+}
+
+.coordinates .options {
+  display: inline-block;
+}
+
+.arrows .arrow {
+  padding: 5px;
+}
+
+.nav .btn-secondary {
+  background-color: rgba(59, 85, 94, 0.2);
+  color: rgb(59, 85, 94);
+  outline: none;
+}
+
+.error {
+  display: block;
+  font-size: 0.8em;
+  color: #a02d1b;
 }

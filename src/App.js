@@ -2,12 +2,9 @@ import React, { Component } from "react";
 import "./style/App.css";
 import "./style/Popup.css";
 import IntroModal from "./components/Modal";
-import NavMenu from "./components/NavMenu";
+import Dashboard from "./components/Dashboard";
 import CoaxMap from "./components/CoaxMap";
-import DateSelector from "./components/DateSelector";
 import LatLonPopup from "./components/LatLonPopup";
-
-import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 
 const DEFAULT_VIEWPORT = {
   center: [49.299, -124.695],
@@ -18,11 +15,10 @@ const farmAViewport = {
   zoom: 10
 };
 
-const mapContainerStyle = {
-  marginLeft: "64px",
-  position: "relative"
+const CURSOR = {
+  true: "crosshair",
+  false: "grab"
 };
-
 const farmAPolygon = [
   [-124.63559, 49.80121],
   [-124.73984, 49.89259],
@@ -31,27 +27,14 @@ const farmAPolygon = [
   [-124.63559, 49.80121]
 ];
 
-/*function CoaxCalendar(props) {
-  if (props.isVisible) {
-    return <div className="calendarContainer" style={calendarStyle}>
-    <Calendar
-      onChange={this.onChangeDate}
-      value={this.state.date}
-    />
-  </div>
-  }
-  return null;
-}*/
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      chloroOpacity: 0.9,
       cursorStyle: { cursor: "grab" },
       curOverlay: "",
       date: new Date("2017-07-10"),
-      displayCalendar: true,
+      displayChlor: true,
       latLonPopup: false,
       markerAdd: false,
       markers: [],
@@ -81,6 +64,7 @@ class App extends Component {
 
   onChangeDate = date => {
     this.setState({ date });
+    console.log("new date is: ", date);
 
     let y = date.getFullYear().toString();
     let m = (date.getMonth() + 1).toString();
@@ -90,47 +74,23 @@ class App extends Component {
     let path = "overlays/" + y + "/" + m + "/" + d + "/overlay.png";
 
     this.setState({
-      curOverlay: path,
-      displayCalendar: false
+      curOverlay: path
     });
   };
 
-  onNavSelected = selected => {
-    if (selected === "home") {
-      this.resetView();
-    }
-    if (selected === "zonesOfInterest") {
-      this.setState({ viewport: farmAViewport, zoneVisible: true });
-    }
-    if (selected === "info") {
-      this.toggleModal();
-    }
-    if (selected === "dataProducts/chlorophyll") {
-      this.setState({
-        chloroOpacity: 0.9
-      });
-    }
-    if (selected === "calendar") {
-      this.setState({ displayCalendar: !this.state.displayCalendar });
-    }
-
-    if (selected === "marker/dropPin") {
-      this.toggleAddMarker();
-    }
-
-    if (selected === "marker/typePin") {
-      this.toggleLatLonPopup();
-    }
-  };
-
-  toggleAddMarker() {
+  toggleAddMarker = () => {
+    let toggle = this.state.markerAdd;
     this.setState({
-      markerAdd: true,
+      markerAdd: !toggle,
       cursorStyle: {
-        cursor: "crosshair"
+        cursor: CURSOR[!toggle]
       }
     });
-  }
+  };
+
+  toggleChlor = displayChlor => {
+    this.setState({ displayChlor });
+  };
 
   addMarker = e => {
     if (this.state.markerAdd || this.state.latLonPopup) {
@@ -164,26 +124,15 @@ class App extends Component {
           show={this.state.latLonPopup}
           addMarker={this.addMarker}
         />
-        <NavMenu
-          onSelect={selected => {
-            this.onNavSelected(selected);
-          }}
-        />
+        <div className="info" onClick={this.toggleModal}>
+          <i className="fas fa-info-circle" style={{ fontSize: "1.75em" }} />
+        </div>
 
-        <div className={"mapContainer"} style={mapContainerStyle}>
-          {this.state.displayCalendar && (
-            <DateSelector
-              date={this.state.date}
-              onChangeDate={selectedDate => {
-                this.onChangeDate(selectedDate);
-              }}
-            />
-          )}
-
+        <div className={"mapContainer"}>
           <CoaxMap
             viewport={this.state.viewport}
             curOverlay={this.state.curOverlay}
-            opacity={this.state.chloroOpacity}
+            displayChlor={this.state.displayChlor}
             zoneVisible={this.state.zoneVisible}
             markers={this.state.markers}
             addMarker={e => {
@@ -192,6 +141,14 @@ class App extends Component {
             mapCursor={this.state.cursorStyle}
           />
         </div>
+        <Dashboard
+          displayChlor={this.state.displayChlor}
+          toggleChlor={this.toggleChlor}
+          toggleLatLonPopup={this.toggleLatLonPopup}
+          toggleAddMarker={this.toggleAddMarker}
+          markerAdd={this.state.markerAdd}
+          onChangeDate={this.onChangeDate}
+        />
       </div>
     );
   }
