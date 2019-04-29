@@ -40,7 +40,8 @@ class CoaxMap extends Component {
         <ScaleControl imperial={false} maxWidth={200} />
         {this.props.displayChlor && (
           <ImageOverlay
-            bounds={[[59.5, -139.001], [47.001, -121.502]]}
+            // bounds={[[59.5, -139.001], [47.001, -121.502]]}
+            bounds={[[54.426, -133.408], [47.831, -122.142]]}
             url={this.props.curOverlay}
             opacity={0.9}
           />
