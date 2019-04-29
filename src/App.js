@@ -10,22 +10,11 @@ const DEFAULT_VIEWPORT = {
   center: [49.299, -124.695],
   zoom: 8
 };
-const farmAViewport = {
-  center: [49.835, -124.602],
-  zoom: 10
-};
 
 const CURSOR = {
   true: "crosshair",
   false: "grab"
 };
-const farmAPolygon = [
-  [-124.63559, 49.80121],
-  [-124.73984, 49.89259],
-  [-124.95712, 49.7919],
-  [-124.76486, 49.65252],
-  [-124.63559, 49.80121]
-];
 
 class App extends Component {
   constructor(props) {
@@ -98,7 +87,6 @@ class App extends Component {
       const newLat = e.latlng.lat.toFixed(6);
       const newLng = e.latlng.lng.toFixed(6);
       markers.push({ lat: newLat, lng: newLng });
-      console.log(markers);
       this.setState({
         markers,
         markerAdd: false,
