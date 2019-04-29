@@ -2,7 +2,6 @@
   "name": "mapv0",
   "version": "0.1.0",
   "private": true,
-  // "homepage": "http://206.12.91.80/mnt/data/algaeExplorer",
   "dependencies": {
     "@trendmicro/react-sidenav": "^0.4.5",
     "bootstrap": "^4.1.3",
