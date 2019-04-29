@@ -71,7 +71,7 @@ class App extends Component {
     let d = date.getDate().toString();
     d.length === 1 && (d = "0" + d);
     m.length === 1 && (m = "0" + m);
-    let path = "overlays/" + y + "/" + m + "/" + d + "/overlay.png";
+    let path = "/overlays/" + y + "/" + m + "/" + d + "/overlay.png";
 
     this.setState({
       curOverlay: path
