@@ -9,7 +9,7 @@ class IntroModal extends Component {
         toggle={this.props.toggle}
         className={this.props.className}
       >
-        <ModalHeader toggle={this.props.toggle}>CoaX SPECTRAL</ModalHeader>
+        <ModalHeader toggle={this.props.toggle}>Algae Explorer</ModalHeader>
         <ModalBody>
           Welcome to Algae Explorer! This is v0.1 of the map. More information
           should go here.

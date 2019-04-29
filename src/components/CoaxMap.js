@@ -27,7 +27,7 @@ class CoaxMap extends Component {
       <Map
         onViewportChanged={this.onViewportChanged()}
         viewport={this.props.viewport}
-        doubleClickZoom={false}
+        doubleClickZoom={true}
         onClick={this.props.addMarker}
       >
         <TileLayer
