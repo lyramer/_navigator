@@ -22,7 +22,7 @@ class App extends Component {
     this.state = {
       cursorStyle: { cursor: "grab" },
       curOverlay: "",
-      date: new Date("2017-07-10"),
+      date: new Date(2017, 6, 12),
       displayChlor: true,
       latLonPopup: false,
       markerAdd: false,
@@ -35,6 +35,20 @@ class App extends Component {
       zoneVisible: false
     };
   }
+
+  componentDidMount() {
+    let y = this.state.date.getFullYear().toString();
+    let m = (this.state.date.getMonth() + 1).toString();
+    let d = this.state.date.getDate().toString();
+    d.length === 1 && (d = "0" + d);
+    m.length === 1 && (m = "0" + m);
+    let path = "/overlays/" + y + "/" + m + "/" + d + "/overlay.png";
+
+    this.setState({
+      curOverlay: path
+    });
+  }
+
   toggleModal = () => {
     this.setState({
       modal: !this.state.modal
@@ -53,7 +67,6 @@ class App extends Component {
 
   onChangeDate = date => {
     this.setState({ date });
-    console.log("new date is: ", date);
 
     let y = date.getFullYear().toString();
     let m = (date.getMonth() + 1).toString();
@@ -136,6 +149,7 @@ class App extends Component {
           toggleAddMarker={this.toggleAddMarker}
           markerAdd={this.state.markerAdd}
           onChangeDate={this.onChangeDate}
+          curDate={this.state.date}
         />
       </div>
     );

@@ -19,7 +19,10 @@ class Dashboard extends Component {
             toggleLatLonPopup={this.props.toggleLatLonPopup}
           />
 
-          <DateSelector onChangeDate={this.props.onChangeDate} />
+          <DateSelector
+            onChangeDate={this.props.onChangeDate}
+            curDate={this.props.curDate}
+          />
         </Nav>
       </Navbar>
     );

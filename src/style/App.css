@@ -1,18 +1,12 @@
-.mapStyle {
-  height: calc(100vh - 100px);
-}
-
 body {
   font-family: Courier, monospace;
   background: #6b96e6;
 }
 
-.mapStyle,
-.leaflet-container,
-.mapContainer {
+.leaflet-container {
   height: 100vh;
   width: 100%;
-  position: relative;
+  /* position: relative; */
 }
 
 .leaflet-control-scale-line {

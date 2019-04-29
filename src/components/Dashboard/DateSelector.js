@@ -5,9 +5,9 @@ class DateSelector extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dd: new Date().getDate(),
-      mm: new Date().getMonth(), //January is 0!
-      yyyy: new Date().getFullYear(),
+      dd: this.props.curDate.getDate(),
+      mm: this.props.curDate.getMonth(), //January is 0!
+      yyyy: this.props.curDate.getFullYear(),
       error: ""
     };
   }
@@ -99,7 +99,7 @@ class DateSelector extends Component {
         });
         break;
     }
-    if (!error) {
+    if (!error || error === "") {
       let date = new Date(this.state.yyyy, this.state.mm - 1, this.state.dd);
       this.props.onChangeDate(date);
     }
