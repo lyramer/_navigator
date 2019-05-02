@@ -29,6 +29,11 @@ class CoaxMap extends Component {
         viewport={this.props.viewport}
         doubleClickZoom={true}
         onClick={this.props.addMarker}
+        minZoom={6}
+        maxBounds={[
+          [44.887012, -111.137695], // southwest corner
+          [59.92199, -144.624023] // northeast corner
+        ]}
       >
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

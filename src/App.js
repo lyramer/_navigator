@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./style/App.css";
+import "./style/Dashboard.css";
 import "./style/Popup.css";
 import IntroModal from "./components/Modal";
 import Dashboard from "./components/Dashboard";

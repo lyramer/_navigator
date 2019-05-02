@@ -1,193 +1,112 @@
 import React, { Component } from "react";
 import { NavItem, Button } from "reactstrap";
 
+const years = [2019, 2018, 2017, 2016, 2015];
+const months = [
+  { val: 0, name: "January" },
+  { val: 1, name: "February" },
+  { val: 2, name: "March" },
+  { val: 3, name: "April" },
+  { val: 4, name: "May" },
+  { val: 5, name: "June" },
+  { val: 6, name: "July" },
+  { val: 7, name: "August" },
+  { val: 8, name: "September" },
+  { val: 9, name: "October" },
+  { val: 10, name: "November" },
+  { val: 11, name: "December" }
+];
+const DateOption = props => <option value={props.val}>{props.name}</option>;
+
 class DateSelector extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dd: this.props.curDate.getDate(),
-      mm: this.props.curDate.getMonth(), //January is 0!
-      yyyy: this.props.curDate.getFullYear(),
       error: ""
     };
   }
 
-  updateYear(x) {
-    let newYear = Number(this.state.yyyy) + x;
-    if (isNaN(newYear)) {
-      newYear = new Date().getFullYear();
+  updateYear(e) {
+    let curDay = this.props.curDate.getDate();
+    let curMonth = this.props.curDate.getMonth();
+    let newDate = new Date(e.target.value, curMonth, curDay);
+    if (newDate > new Date()) {
+      this.setState({ error: "You may not select a date in the future." });
+    } else {
+      this.props.onChangeDate(newDate);
+      this.setState({ error: "" });
     }
-
-    let newDate = new Date(newYear, this.state.mm, this.state.dd);
-    let dd = newDate.getDate();
-    let mm = newDate.getMonth();
-    let yyyy = newDate.getFullYear();
-    this.setState({ dd, mm, yyyy });
-    this.props.onChangeDate(newDate);
   }
 
-  updateMonth(x) {
-    let newMonth = Number(this.state.mm) + x; //January is 0!
-    if (isNaN(newMonth)) newMonth = new Date().getMonth();
-    let newDate = new Date(this.state.yyyy, newMonth, this.state.dd);
-    let dd = newDate.getDate();
-    let mm = newDate.getMonth(); //January is 0!
-    let yyyy = newDate.getFullYear();
-    this.setState({ dd, mm, yyyy });
-    this.props.onChangeDate(newDate);
+  updateMonth(e) {
+    let curDay = this.props.curDate.getDate();
+    let curYear = this.props.curDate.getFullYear();
+    let newDate = new Date(curYear, e.target.value, curDay);
+    if (newDate > new Date()) {
+      this.setState({ error: "You may not select a date in the future." });
+    } else {
+      this.props.onChangeDate(newDate);
+      this.setState({ error: "" });
+    }
   }
 
-  updateDay(x) {
-    let newDay = Number(this.state.dd) + x;
-    if (isNaN(newDay)) newDay = new Date().getDay();
-
-    let newDate = new Date(this.state.yyyy, this.state.mm, newDay);
-    let dd = newDate.getDate();
-    let mm = newDate.getMonth(); //January is 0!
-    let yyyy = newDate.getFullYear();
-    this.setState({ dd, mm, yyyy });
-    this.props.onChangeDate(newDate);
+  updateDay(e) {
+    let curMonth = this.props.curDate.getMonth();
+    let curYear = this.props.curDate.getFullYear();
+    let newDate = new Date(curYear, curMonth, e.target.value);
+    if (newDate > new Date()) {
+      this.setState({ error: "You may not select a date in the future." });
+    } else {
+      this.props.onChangeDate(newDate);
+      this.setState({ error: "" });
+    }
   }
 
-  updateDate = e => {
-    let thisYear = new Date().getFullYear();
-    let thisMonth = new Date().getMonth() + 1;
-    let thisDay = new Date().getMonth() + 1;
-    let error = "";
-    switch (e.target.id) {
-      case "year":
-        let newYear = Number(e.target.value);
-        if (!newYear || newYear < 1990 || newYear > thisYear) {
-          error = "The year you choose must be between 1990 and " + thisYear;
-        }
-        this.setState({
-          yyyy: Number(e.target.value),
-          error: error
-        });
-        break;
-      case "month":
-        let newMonth = Number(e.target.value);
-        if (!newMonth || newMonth < 1 || newMonth > 12) {
-          error = "Please pick a valid month";
-        } else if (this.state.yyyy === thisYear && thisMonth < newMonth) {
-          error = "Data is not available for future dates";
-        }
-        this.setState({
-          mm: Number(e.target.value - 1),
-          error: error
-        });
-        break;
-      case "day":
-        let newDay = Number(e.target.value);
-        if (!newDay || newDay < 0 || newDay > 31) {
-          error = "Please pick a valid date";
-        } else if (
-          this.state.yyyy === thisYear &&
-          thisMonth === this.state.month &&
-          newDay > thisDay
-        ) {
-          error = "Data is not available for future dates";
-        }
-        this.setState({
-          dd: Number(e.target.value),
-          error: error
-        });
-        break;
-      default:
-        this.setState({
-          error: "Uh oh, something went wrong. Please try again."
-        });
-        break;
+  renderDays(month, year) {
+    const days = [];
+    let monthLength = new Date(year, month + 1, 0).getDate();
+    for (var i = 1; i <= monthLength; i++) {
+      days.push(<DateOption val={i} key={i} name={i} />);
     }
-    if (!error || error === "") {
-      let date = new Date(this.state.yyyy, this.state.mm - 1, this.state.dd);
-      this.props.onChangeDate(date);
-    }
-  };
+    return days;
+  }
 
   render() {
+    let curDay = this.props.curDate.getDate();
+    let curMonth = this.props.curDate.getMonth();
+    let curYear = this.props.curDate.getFullYear();
+    console.log(curYear);
     return (
       <NavItem id="nav_cal">
         <form id="date">
-          <span className="arrows">
-            <Button
-              color="secondary"
-              className="arrow"
-              onClick={() => this.updateYear(-1)}
-              type="button"
-            >
-              {"<<<"}
-            </Button>
-            <Button
-              color="secondary"
-              className="arrow"
-              onClick={() => this.updateMonth(-1)}
-              type="button"
-            >
-              {"<<"}
-            </Button>
-            <Button
-              color="secondary"
-              className="arrow"
-              onClick={() => this.updateDay(-1)}
-              type="button"
-            >
-              {"<"}
-            </Button>
-          </span>
-          <span className="cal-item">
-            <input
-              type="text"
-              id="year"
-              pattern="[0-9]{4}"
-              value={this.state.yyyy}
-              onChange={e => this.updateDate(e)}
-            />
-          </span>
-          <span className="cal-item">
-            <input
-              type="text"
-              id="month"
-              pattern="[0-9]{1,2}"
-              value={this.state.mm + 1}
-              onChange={e => this.updateDate(e)}
-            />
-          </span>
-          <span className="cal-item">
-            <input
-              type="text"
-              id="day"
-              value={this.state.dd}
-              onChange={e => this.updateDate(e)}
-            />
-          </span>
-          <span className="arrows">
-            <Button
-              color="secondary"
-              className="arrow"
-              pattern="[0-9]{1,2}"
-              onClick={() => this.updateDay(1)}
-              type="button"
-            >
-              {">"}
-            </Button>
-            <Button
-              color="secondary"
-              className="arrow"
-              onClick={() => this.updateMonth(1)}
-              type="button"
-            >
-              {">>"}
-            </Button>
-            <Button
-              color="secondary"
-              className="arrow"
-              onClick={() => this.updateYear(1)}
-              type="button"
-            >
-              {">>>"}
-            </Button>
-          </span>
+          <select
+            id="year"
+            className="dropdown year"
+            onChange={e => this.updateYear(e)}
+            value={curYear}
+          >
+            {years.map(year => (
+              <DateOption val={year} key={year} name={year} />
+            ))}
+          </select>
+          <select
+            id="month"
+            className="dropdown month"
+            onChange={e => this.updateMonth(e)}
+            value={curMonth}
+          >
+            {months.map(month => (
+              <DateOption val={month.val} key={month.name} name={month.name} />
+            ))}
+          </select>
+          <select
+            id="day"
+            className="dropdown day"
+            onChange={e => this.updateDay(e)}
+            value={curDay}
+          >
+            {this.renderDays(curMonth, curYear)}
+          </select>
         </form>
         <span className="error">{this.state.error}</span>
       </NavItem>

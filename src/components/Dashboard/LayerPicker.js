@@ -4,7 +4,7 @@ import { NavItem } from "reactstrap";
 class LayerPicker extends Component {
   handleChange = event => {
     console.log(event.target);
-    if (event.target.value == "chlor") {
+    if (event.target.value === "chlor") {
       console.log("chlor selected");
       this.props.toggleChlor(true);
     } else {
