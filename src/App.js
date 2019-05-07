@@ -5,7 +5,7 @@ import "./style/Popup.css";
 import IntroModal from "./components/Modal";
 import Dashboard from "./components/Dashboard";
 import CoaxMap from "./components/CoaxMap";
-import LatLonPopup from "./components/LatLonPopup";
+import LatLonPopup from "./components/Dashboard/LatLonPopup";
 
 const DEFAULT_VIEWPORT = {
   center: [49.299, -124.695],

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavItem, Button } from "reactstrap";
+import { NavItem } from "reactstrap";
 
 const years = [2019, 2018, 2017, 2016, 2015];
 const months = [
@@ -75,7 +75,6 @@ class DateSelector extends Component {
     let curDay = this.props.curDate.getDate();
     let curMonth = this.props.curDate.getMonth();
     let curYear = this.props.curDate.getFullYear();
-    console.log(curYear);
     return (
       <NavItem id="nav_cal">
         <form id="date">

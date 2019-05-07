@@ -18,9 +18,7 @@ function Zone(props) {
 }
 
 class CoaxMap extends Component {
-  onViewportChanged = viewport => {
-    console.log("Zoom level: " + this.props.viewport.zoom);
-  };
+  onViewportChanged = viewport => {};
 
   render() {
     return (

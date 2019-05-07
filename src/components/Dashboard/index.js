@@ -1,32 +1,25 @@
-import React, { Component } from "react";
+import React from "react";
 import { Nav, Navbar } from "reactstrap";
 import DateSelector from "./DateSelector";
 import Coordinates from "./Coordinates";
 import LayerPicker from "./LayerPicker";
 
-class Dashboard extends Component {
-  render() {
-    return (
-      <Navbar className="fixed-bottom navbar-light">
-        <Nav>
-          <LayerPicker
-            toggleChlor={this.props.toggleChlor}
-            displayChlor={this.props.displayChlor}
-          />
-          <Coordinates
-            markerAdd={this.props.markerAdd}
-            toggleAddMarker={this.props.toggleAddMarker}
-            toggleLatLonPopup={this.props.toggleLatLonPopup}
-          />
+const Dashboard = props => (
+  <Navbar className="fixed-bottom navbar-light">
+    <Nav>
+      <LayerPicker
+        toggleChlor={props.toggleChlor}
+        displayChlor={props.displayChlor}
+      />
+      <Coordinates
+        markerAdd={props.markerAdd}
+        toggleAddMarker={props.toggleAddMarker}
+        toggleLatLonPopup={props.toggleLatLonPopup}
+      />
 
-          <DateSelector
-            onChangeDate={this.props.onChangeDate}
-            curDate={this.props.curDate}
-          />
-        </Nav>
-      </Navbar>
-    );
-  }
-}
+      <DateSelector onChangeDate={props.onChangeDate} curDate={props.curDate} />
+    </Nav>
+  </Navbar>
+);
 
 export default Dashboard;

@@ -67,10 +67,9 @@
   display: inline-block;
 }
 
-.error {
+.navbar .error {
   display: block;
   font-size: 0.8em;
-  color: #a02d1b;
 }
 
 .dropdown {

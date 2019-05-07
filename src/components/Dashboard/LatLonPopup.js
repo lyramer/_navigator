@@ -13,14 +13,14 @@ class LatLonPopup extends Component {
   createLatLon = event => {
     event.preventDefault();
     this.setState({ error: false });
-    let latLonRe = /\-?[0-9]{1,3}\.[0-9]*\,\s*\-?[0-9]{1,3}\.[0-9]*/;
+    let latLonRe = /-?[0-9]{1,3}\.[0-9]*,\s*-?[0-9]{1,3}\.[0-9]*/;
     let latLonRaw = event.currentTarget.latlon.value.replace(/ /g, "");
     if (latLonRe.test(latLonRaw)) {
       let latlon = latLonRaw.split(",");
       let e = { latlng: { lat: Number(latlon[0]), lng: Number(latlon[1]) } };
       this.props.addMarker(e);
     } else {
-      if (!latLonRaw || latLonRaw == "") {
+      if (!latLonRaw || latLonRaw === "") {
         this.setState({
           error: true,
           errorType:
@@ -46,19 +46,19 @@ class LatLonPopup extends Component {
       >
         <ModalHeader toggle={this.props.toggle}>Enter Coordinates</ModalHeader>
         <ModalBody>
-          {this.state.error && <div class="error">{this.state.errorType}</div>}
           <form className="latlon" id="latLonForm" onSubmit={this.createLatLon}>
             <input type="text" name="latlon" />
           </form>
+          {this.state.error && <div class="error">{this.state.errorType}</div>}
         </ModalBody>
         <ModalFooter>
           <Button
-            color="primary"
+            color="secondary"
             type="submit"
             form="latLonForm"
-            class="add-pin"
+            className="add-pin"
           >
-            Add Pin <i class="fas fa-arrow-right" />
+            Add Pin <i className="fas fa-arrow-right" />
           </Button>
         </ModalFooter>
       </Modal>
