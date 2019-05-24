@@ -34,7 +34,11 @@ class DateDropdown extends Component {
         {!!this.props.dateList && !!this.props.dateList[curYear][curMonth] && (
           <DropdownMenu>
             {Object.keys(this.props.dateList[curYear][curMonth]).map(date => (
-              <DropdownItem key={date} onClick={() => this.updateDay(date)}>
+              <DropdownItem
+                key={date}
+                onClick={() => this.updateDay(date)}
+                disabled={!this.props.dateList[curYear][curMonth][date]}
+              >
                 {date}
               </DropdownItem>
             ))}
