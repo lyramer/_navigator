@@ -1,16 +1,21 @@
 import React, { Component } from "react";
-import "./style/App.css";
-import "./style/Dashboard.css";
-import "./style/Popup.css";
-import IntroModal from "./components/Modal";
-import Dashboard from "./components/Dashboard";
-import CoaxMap from "./components/CoaxMap";
-import LatLonPopup from "./components/Dashboard/LatLonPopup";
+import "../style/App.css";
+import "../style/Dashboard.css";
+import "../style/Popup.css";
+import "../style/ColorBar.css";
+import IntroModal from "./Modal";
+import Dashboard from "./Dashboard";
+import CoaxMap from "./CoaxMap";
+import LatLonPopup from "./Dashboard/LatLonPopup";
+import ColorBar from "./ColorBar";
+import { getImgPath, getDateJson, createValidDateList } from "../helpers";
 
 const DEFAULT_VIEWPORT = {
   center: [49.299, -124.695],
   zoom: 8
 };
+
+const DEFAULT_DATE = new Date(2017, 6, 12);
 
 const CURSOR = {
   true: "crosshair",
@@ -23,31 +28,40 @@ class App extends Component {
     this.state = {
       cursorStyle: { cursor: "grab" },
       curOverlay: "",
-      date: new Date(2017, 6, 12),
+      date: DEFAULT_DATE,
+      dateList: undefined,
       displayChlor: true,
       latLonPopup: false,
       markerAdd: false,
       markers: [],
       modal: false, //TODO make true. false for dev only
-      viewport: {
-        center: [49.299, -124.695],
-        zoom: 8
-      },
-      zoneVisible: false
+      viewport: DEFAULT_VIEWPORT,
+      zoneVisible: false,
+      error: false
     };
   }
 
   componentDidMount() {
-    let y = this.state.date.getFullYear().toString();
-    let m = (this.state.date.getMonth() + 1).toString();
-    let d = this.state.date.getDate().toString();
-    d.length === 1 && (d = "0" + d);
-    m.length === 1 && (m = "0" + m);
-    let path = "/overlays/" + y + "/" + m + "/" + d + "/overlay.png";
-
-    this.setState({
-      curOverlay: path
-    });
+    let path = getImgPath(this.state.date);
+    this.setState({ curOverlay: path });
+    // gets the latest list of dates
+    fetch("/curDates.txt")
+      .then(res => res.text())
+      .then(
+        result => {
+          let dates = getDateJson(result.split("\n"));
+          let dateList = createValidDateList(dates);
+          this.setState({ dateList });
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        error => {
+          this.setState({
+            error
+          });
+        }
+      );
   }
 
   toggleModal = () => {
@@ -62,22 +76,11 @@ class App extends Component {
     });
   };
 
-  resetView = () => {
-    this.setState({ viewport: DEFAULT_VIEWPORT });
-  };
-
   onChangeDate = date => {
-    this.setState({ date });
-
-    let y = date.getFullYear().toString();
-    let m = (date.getMonth() + 1).toString();
-    let d = date.getDate().toString();
-    d.length === 1 && (d = "0" + d);
-    m.length === 1 && (m = "0" + m);
-    let path = "/overlays/" + y + "/" + m + "/" + d + "/overlay.png";
-
+    let path = getImgPath(date);
     this.setState({
-      curOverlay: path
+      curOverlay: path,
+      date
     });
   };
 
@@ -101,6 +104,7 @@ class App extends Component {
       const newLat = e.latlng.lat.toFixed(6);
       const newLng = e.latlng.lng.toFixed(6);
       markers.push({ lat: newLat, lng: newLng });
+
       this.setState({
         markers,
         markerAdd: false,
@@ -127,10 +131,10 @@ class App extends Component {
           addMarker={this.addMarker}
         />
         <div className="info" onClick={this.toggleModal}>
-          <i className="fas fa-info-circle" style={{ fontSize: "1.75em" }} />
+          <i className="fas fa-info-circle" />
         </div>
 
-        <div className={"mapContainer"}>
+        <div className={"mapContainer"} id="mapContainer">
           <CoaxMap
             viewport={this.state.viewport}
             curOverlay={this.state.curOverlay}
@@ -143,6 +147,7 @@ class App extends Component {
             mapCursor={this.state.cursorStyle}
           />
         </div>
+        <ColorBar />
         <Dashboard
           displayChlor={this.state.displayChlor}
           toggleChlor={this.toggleChlor}
@@ -151,6 +156,7 @@ class App extends Component {
           markerAdd={this.state.markerAdd}
           onChangeDate={this.onChangeDate}
           curDate={this.state.date}
+          dateList={this.state.dateList}
         />
       </div>
     );

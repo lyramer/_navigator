@@ -1,10 +1,16 @@
-body {
-  background: #6b96e6;
+body,
+* {
+  font-family: "Karla", Arial, sans-serif;
 }
 
 .btn:focus,
 .btn-secondary:focus {
   box-shadow: none;
+}
+
+.mapContainer {
+  height: 100vh;
+  width: calc(100% - 70px);
 }
 
 .leaflet-container {
@@ -49,11 +55,15 @@ body {
 .info {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 70px;
   z-index: 1000000000;
   color: #e6ebe0;
   padding: 10px;
   cursor: pointer;
+}
+
+.info i {
+  font-size: 1.25em;
 }
 
 .modal-content {
@@ -87,4 +97,9 @@ body {
 .modal-header .btn-secondary {
   background-color: rgba(59, 85, 94, 0.2);
   box-shadow: none;
+}
+
+.leaflet-fade-anim .leaflet-tile,
+.leaflet-zoom-anim .leaflet-zoom-animated {
+  will-change: auto !important;
 }

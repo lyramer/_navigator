@@ -1,0 +1,36 @@
+.colorbar {
+  z-index: 5000;
+  position: fixed;
+  bottom: 100px;
+  right: 0;
+  background-color: #e6ebe0;
+  font-size: 0.6em;
+  height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  width: 70px;
+}
+
+.item {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  border: 1px solid #e6ebe0;
+  border-left: none;
+}
+
+.item .color {
+  height: 100%;
+  width: 20px;
+  display: inline-block;
+  margin-right: 2px;
+}
+
+.item .value {
+  line-height: 100%;
+  display: inline-block;
+}
+
+.legend {
+  text-align: center;
+}

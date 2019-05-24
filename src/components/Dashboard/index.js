@@ -17,7 +17,11 @@ const Dashboard = props => (
         toggleLatLonPopup={props.toggleLatLonPopup}
       />
 
-      <DateSelector onChangeDate={props.onChangeDate} curDate={props.curDate} />
+      <DateSelector
+        onChangeDate={props.onChangeDate}
+        curDate={props.curDate}
+        dateList={props.dateList}
+      />
     </Nav>
   </Navbar>
 );
