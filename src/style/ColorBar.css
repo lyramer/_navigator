@@ -3,9 +3,10 @@
   position: fixed;
   bottom: 100px;
   right: 0;
-  background-color: #e6ebe0;
+  background-color: transparent;
   font-size: 0.6em;
-  height: calc(100vh - 100px);
+  height: auto;
+  max-height: calc(100%-100px);
   display: flex;
   flex-direction: column;
   width: 70px;

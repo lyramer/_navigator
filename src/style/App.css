@@ -10,7 +10,8 @@ body,
 
 .mapContainer {
   height: 100vh;
-  width: calc(100% - 70px);
+  /* width: calc(100% - 70px); */
+  width: 100%;
 }
 
 .leaflet-container {
@@ -55,7 +56,7 @@ body,
 .info {
   position: absolute;
   top: 0;
-  right: 70px;
+  right: 0;
   z-index: 1000000000;
   color: #e6ebe0;
   padding: 10px;
@@ -102,4 +103,34 @@ body,
 .leaflet-fade-anim .leaflet-tile,
 .leaflet-zoom-anim .leaflet-zoom-animated {
   will-change: auto !important;
+}
+.logos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.logos .logo {
+  max-height: 90px;
+  max-width: 200px;
+}
+
+.nav .logo {
+  max-height: 80px;
+}
+
+.esa {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.esa img {
+  max-width: 40%;
+}
+
+.modal p {
+  margin-bottom: 25px;
 }
