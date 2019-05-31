@@ -9,13 +9,14 @@ import CoaxMap from "./CoaxMap";
 import LatLonPopup from "./Dashboard/LatLonPopup";
 import ColorBar from "./ColorBar";
 import { getImgPath, getDateJson, createValidDateList } from "../helpers";
+//import { getPixelData } from "./Coordinates";
 
 const DEFAULT_VIEWPORT = {
   center: [49.299, -124.695],
   zoom: 8
 };
 
-const DEFAULT_DATE = new Date(2017, 6, 12);
+const DEFAULT_DATE = new Date(2019, 4, 28);
 
 const CURSOR = {
   true: "crosshair",
@@ -42,10 +43,11 @@ class App extends Component {
   }
 
   componentDidMount() {
+    //   getPixelData();
     let path = getImgPath(this.state.date);
     this.setState({ curOverlay: path });
     // gets the latest list of dates
-    fetch("/curDates.txt")
+    fetch("/OLCI/curDates.txt")
       .then(res => res.text())
       .then(
         result => {
@@ -98,12 +100,23 @@ class App extends Component {
     this.setState({ displayChlor });
   };
 
+  mouseMove = e => {
+    console.log(e);
+  };
+
   addMarker = e => {
     if (this.state.markerAdd || this.state.latLonPopup) {
       const { markers } = this.state;
+      const imgOrigin = { lat: 59.5, lng: -139.001 };
       const newLat = e.latlng.lat.toFixed(6);
       const newLng = e.latlng.lng.toFixed(6);
-      markers.push({ lat: newLat, lng: newLng });
+      const imgLat = imgOrigin.lat - e.latlng.lat;
+      const imgLng = -1 * (imgOrigin.lng - e.latlng.lng);
+      const x = Math.round(imgLat * (6493 / 12.499));
+      const y = Math.round(imgLng * (7823 / 17.499));
+      markers.push({ lat: newLat, lng: newLng, x: x, y: y });
+
+      console.log("lt/ln value is: " + x + " and " + y);
 
       this.setState({
         markers,
@@ -136,6 +149,9 @@ class App extends Component {
 
         <div className={"mapContainer"} id="mapContainer">
           <CoaxMap
+            mouseMove={e => {
+              this.mouseMove(e);
+            }}
             viewport={this.state.viewport}
             curOverlay={this.state.curOverlay}
             displayChlor={this.state.displayChlor}

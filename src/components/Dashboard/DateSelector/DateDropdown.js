@@ -14,9 +14,8 @@ class DateDropdown extends Component {
     let error = "";
     if (newDate > new Date()) {
       error = "You may not select a date in the future.";
-    } else {
-      this.props.onChangeDate(newDate);
     }
+    this.props.onChangeDate(newDate);
     this.props.updateErrorMsg(error);
   };
 

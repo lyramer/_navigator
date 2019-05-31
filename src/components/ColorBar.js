@@ -32,10 +32,11 @@ const ColorItem = props => (
 
 const ColorBar = props => (
   <div className="colorbar">
-    {colors.map((color, index) => (
-      <ColorItem val={color.val} key={index} rgb={color.rgb} />
-    ))}
-    <div className="legend">mg/m&sup3;</div>
+    <img
+      src="/images/chl_colorbar.png"
+      alt="Color Scale"
+      className="colorscale"
+    />
   </div>
 );
 

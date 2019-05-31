@@ -71,6 +71,7 @@ export function getDateJson(dateArr) {
 export function createValidDateList(dates) {
   let dateList = {};
   dates.forEach(d => {
+    if (!d || d.year === 0) return;
     // check to see if year exists
     if (!dateList[d.year]) {
       dateList[d.year] = JSON.parse(JSON.stringify(BLANK_YEAR));
@@ -94,5 +95,5 @@ export function getImgPath(date) {
   let d = date.getDate().toString();
   d.length === 1 && (d = "0" + d);
   m.length === 1 && (m = "0" + m);
-  return "/overlays/" + y + "/" + m + "/" + d + "/overlay.png";
+  return "/OLCI/" + y + "/" + m + "/" + d + "/polymer/overlay.png";
 }

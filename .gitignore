@@ -15,6 +15,7 @@ package-lock.json
 
 # images can go separately
 /public/overlays/**
+/public/OLCI/**
 
 # misc
 .DS_Store

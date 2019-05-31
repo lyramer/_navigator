@@ -10,19 +10,14 @@ import {
 } from "react-leaflet";
 import { mapboxAccessToken } from "../mapboxAccessToken.json";
 
-function Zone(props) {
-  if (props.isVisible) {
-    return <Circle center={[49.807, -124.811]} radius={8000} />;
-  }
-  return null;
-}
-
 class CoaxMap extends Component {
   onViewportChanged = viewport => {};
 
   render() {
     return (
       <Map
+        // mousemove={e => this.mouseMove(e)}
+        mouseMove={this.props.mouseMove}
         onViewportChanged={this.onViewportChanged()}
         viewport={this.props.viewport}
         doubleClickZoom={true}
@@ -48,8 +43,6 @@ class CoaxMap extends Component {
             opacity={0.9}
           />
         )}
-
-        <Zone isVisible={this.props.zoneVisible} />
 
         <div id="mapid" className="mapStyle" style={this.props.mapCursor} />
         {this.props.markers.map((position, idx) => (
