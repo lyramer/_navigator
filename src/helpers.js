@@ -93,7 +93,7 @@ export function findLatestDate(dateList) {
   let curDate, curMonth, curYear;
   let dateFound = false;
   while (!dateFound) {
-    console.log(typeof validDate);
+    console.log(validDate);
     curDate = validDate.getDate();
     curMonth = validDate.getMonth();
     curYear = validDate.getFullYear();
