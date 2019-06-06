@@ -4,7 +4,6 @@ import {
   TileLayer,
   ScaleControl,
   ImageOverlay,
-  Circle,
   Marker,
   Popup
 } from "react-leaflet";

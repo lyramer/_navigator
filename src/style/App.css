@@ -91,30 +91,30 @@ body,
 .leaflet-zoom-anim .leaflet-zoom-animated {
   will-change: auto !important;
 }
-.logos {
+.modal-body .logos {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
   align-items: center;
 }
 
-.logos a {
+.modal-body .logos a {
   margin: 20px 10px;
 }
 
-.logos .logo {
+.modal-body .logos .logo {
   max-height: 90px;
   max-width: 200px;
 }
 
-.esa {
+.modal-body .esa {
   width: 100%;
   display: flex;
   justify-content: center;
   text-align: center;
 }
 
-.esa img {
+.modal-body .esa img {
   max-width: 40%;
 }
 

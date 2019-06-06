@@ -32,20 +32,6 @@ const BLANK_MONTH = {
   31: false
 };
 
-const BLANK_YEAR = {
-  0: {},
-  1: {},
-  2: {},
-  3: {},
-  4: {},
-  5: {},
-  6: {},
-  7: {},
-  8: {},
-  9: {},
-  10: {},
-  11: {}
-};
 // quick function to get the number of days in a month
 // note that year is required due to leap years...
 export function getNumDays(year, month) {
