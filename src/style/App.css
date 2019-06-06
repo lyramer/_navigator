@@ -53,19 +53,6 @@ body,
 .leaflet-bottom {
   bottom: 100px;
 }
-.info {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 1000000000;
-  color: #e6ebe0;
-  padding: 10px;
-  cursor: pointer;
-}
-
-.info i {
-  font-size: 1.25em;
-}
 
 .modal-content {
   color: #e6ebe0;
@@ -106,18 +93,18 @@ body,
 }
 .logos {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  flex-wrap: wrap;
   align-items: center;
-  margin-bottom: 50px;
+}
+
+.logos a {
+  margin: 20px 10px;
 }
 
 .logos .logo {
   max-height: 90px;
   max-width: 200px;
-}
-
-.nav .logo {
-  max-height: 80px;
 }
 
 .esa {

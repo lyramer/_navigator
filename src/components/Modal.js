@@ -23,6 +23,18 @@ const LogoList = [
     url: "http://www.oceannetworks.ca/",
     path: "/images/onc_logo.png",
     alt: "Logo for Ocean Network Canada"
+  },
+
+  {
+    url: "https://www.hakai.org/",
+    path: "/images/hakai_logo.png",
+    alt: "Logo for Hakai Institute"
+  },
+
+  {
+    url: "https://www.psf.ca/",
+    path: "/images/psf_logo.png",
+    alt: "Logo for Pacific Salmon Foundation"
   }
 ];
 

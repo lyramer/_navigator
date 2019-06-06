@@ -5,10 +5,11 @@
   right: 0;
   background-color: transparent;
   font-size: 0.6em;
-  height: auto;
-  max-height: calc(100%-100px);
+  height: calc(100% - 100px);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
   width: 70px;
 }
 
@@ -34,4 +35,15 @@
 
 .legend {
   text-align: center;
+}
+
+.colorbar .info {
+  z-index: 1000000000;
+  color: #e6ebe0;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.colorbar .info i {
+  font-size: 1.7em;
 }
