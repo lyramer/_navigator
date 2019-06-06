@@ -43,8 +43,12 @@ class MonthDropdown extends Component {
         <DropdownToggle caret>{MONTHS[curMonth]}</DropdownToggle>
         <DropdownMenu>
           {this.props.dateList ? (
-            Object.keys(this.props.dateList[curYear]).map(month => (
-              <DropdownItem key={month} onClick={() => this.updateMonth(month)}>
+            Object.keys(MONTHS).map(month => (
+              <DropdownItem
+                key={month}
+                onClick={() => this.updateMonth(month)}
+                disabled={!this.props.dateList[curYear][month]}
+              >
                 {MONTHS[month]}
               </DropdownItem>
             ))

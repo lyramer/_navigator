@@ -74,10 +74,12 @@ export function createValidDateList(dates) {
     if (!d || d.year === 0) return;
     // check to see if year exists
     if (!dateList[d.year]) {
-      dateList[d.year] = JSON.parse(JSON.stringify(BLANK_YEAR));
-      for (let m = 0; m < 12; m++) {
-        dateList[d.year][m] = JSON.parse(JSON.stringify(BLANK_MONTH));
-      }
+      //dateList[d.year] = JSON.parse(JSON.stringify(BLANK_YEAR));
+      dateList[d.year] = {};
+    }
+
+    if (!dateList[d.year][d.month]) {
+      dateList[d.year][d.month] = JSON.parse(JSON.stringify(BLANK_MONTH));
     }
 
     // flag all dates contained in list as true
@@ -85,6 +87,8 @@ export function createValidDateList(dates) {
       dateList[d.year][d.month][d.date] = true;
     }
   });
+
+  console.log("datelist: ", dateList);
   return dateList;
 }
 
@@ -96,4 +100,30 @@ export function getImgPath(date) {
   d.length === 1 && (d = "0" + d);
   m.length === 1 && (m = "0" + m);
   return "/OLCI/" + y + "/" + m + "/" + d + "/polymer/overlay.png";
+}
+
+export function findLatestDate(dateList) {
+  let validDate = new Date();
+  let curDate, curMonth, curYear;
+  let dateFound = false;
+  while (!dateFound) {
+    console.log(typeof validDate);
+    curDate = validDate.getDate();
+    curMonth = validDate.getMonth();
+    curYear = validDate.getFullYear();
+    if (!dateList[curYear]) {
+      validDate = new Date(Number(curYear) - 1, 12, 0);
+      continue;
+    }
+    if (!dateList[curYear][curMonth]) {
+      validDate = new Date(curYear, Number(curMonth), 0);
+      continue;
+    }
+    if (!dateList[curYear][curMonth][curDate]) {
+      validDate = new Date(curYear, curMonth, Number(curDate) - 1);
+      continue;
+    }
+    dateFound = true;
+  }
+  return validDate;
 }

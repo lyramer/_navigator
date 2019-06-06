@@ -8,7 +8,12 @@ import Dashboard from "./Dashboard";
 import CoaxMap from "./CoaxMap";
 import LatLonPopup from "./Dashboard/LatLonPopup";
 import ColorBar from "./ColorBar";
-import { getImgPath, getDateJson, createValidDateList } from "../helpers";
+import {
+  getImgPath,
+  getDateJson,
+  createValidDateList,
+  findLatestDate
+} from "../helpers";
 //import { getPixelData } from "./Coordinates";
 
 const DEFAULT_VIEWPORT = {
@@ -43,9 +48,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    //   getPixelData();
-    let path = getImgPath(this.state.date);
-    this.setState({ curOverlay: path });
     // gets the latest list of dates
     fetch("/OLCI/curDates.txt")
       .then(res => res.text())
@@ -53,7 +55,9 @@ class App extends Component {
         result => {
           let dates = getDateJson(result.split("\n"));
           let dateList = createValidDateList(dates);
-          this.setState({ dateList });
+          let date = findLatestDate(dateList);
+          let curOverlay = getImgPath(date);
+          this.setState({ dateList, date, curOverlay });
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -143,10 +147,6 @@ class App extends Component {
           show={this.state.latLonPopup}
           addMarker={this.addMarker}
         />
-        <div className="info" onClick={this.toggleModal}>
-          <i className="fas fa-info-circle" />
-        </div>
-
         <div className={"mapContainer"} id="mapContainer">
           <CoaxMap
             mouseMove={e => {
@@ -163,7 +163,7 @@ class App extends Component {
             mapCursor={this.state.cursorStyle}
           />
         </div>
-        <ColorBar />
+        <ColorBar toggleInfo={this.toggleModal} />
         <Dashboard
           displayChlor={this.state.displayChlor}
           toggleChlor={this.toggleChlor}
