@@ -3,6 +3,7 @@
 - [Overview](#overview)
 - [Build Notes](#build-notes)
 - [Updating With New Map Data](#updating-with-new-map-data)
+- [To Do](#to-do)
 
 ## Overview
 
@@ -17,5 +18,11 @@ Because the data we get from the nightly processing of images from Compute Canad
 ## Updating With New Map Data
 
 There is a file - curDates.txt, of which an old version exists in the public/OLCI folder for development purposes. The one that gets updated regularly is the OLCI folder which is in the mnt folder on the server. curDates.txt contains a newline separated list of all the dates for which we have imagery, and which is fetched and parsed on component load so that the available dates will be selectable in the date dropdown.
+
+## To Do
+
+-Pinging the server to check if the image exists so we don't have a big fat nothing to display (with no error) if for some reason the imagery isn't found.
+
+-
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Please go see their documentation if you have any questions regarding this.
