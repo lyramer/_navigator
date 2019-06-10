@@ -38,7 +38,7 @@ class DateModal extends Component {
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={this.toggle}>
-              Cancel
+              Close
             </Button>{" "}
           </ModalFooter>
         </Modal>
