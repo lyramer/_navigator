@@ -6,13 +6,17 @@ import "../style/ColorBar.css";
 import IntroModal from "./Modal";
 import Dashboard from "./Dashboard";
 import CoaxMap from "./CoaxMap";
-import LatLonPopup from "./Dashboard/LatLonPopup";
+import LatLonPopup from "./Dashboard/Coordinates/LatLonPopup";
 import ColorBar from "./ColorBar";
+import Spinner from "react-tiny-spin";
 import {
   getImgPath,
   getDateJson,
   createValidDateList,
-  findLatestDate
+  findLatestDate,
+  checkIfDateIsValid,
+  getShortLatLng,
+  getPngCoords
 } from "../helpers";
 //import { getPixelData } from "./Coordinates";
 
@@ -21,7 +25,10 @@ const DEFAULT_VIEWPORT = {
   zoom: 8
 };
 
-const DEFAULT_DATE = new Date(2019, 4, 28);
+const spinCfg = {
+  width: 12,
+  radius: 35
+};
 
 const CURSOR = {
   true: "crosshair",
@@ -32,18 +39,17 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cursorStyle: { cursor: "grab" },
       curOverlay: "",
-      date: DEFAULT_DATE,
+      date: new Date(),
       dateList: undefined,
       displayChlor: true,
-      latLonPopup: false,
-      markerAdd: false,
+      droppingPin: false,
       markers: [],
       modal: false, //TODO make true. false for dev only
       viewport: DEFAULT_VIEWPORT,
       zoneVisible: false,
-      error: false
+      errorMsg: "",
+      loading: true
     };
   }
 
@@ -57,14 +63,15 @@ class App extends Component {
           let dateList = createValidDateList(dates);
           let date = findLatestDate(dateList);
           let curOverlay = getImgPath(date);
-          this.setState({ dateList, date, curOverlay });
+          let errorMsg = checkIfDateIsValid(date, dateList);
+          this.setState({ dateList, date, curOverlay, errorMsg });
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
-        error => {
+        errorMsg => {
           this.setState({
-            error
+            errorMsg
           });
         }
       );
@@ -76,27 +83,35 @@ class App extends Component {
     });
   };
 
-  toggleLatLonPopup = () => {
-    this.setState({
-      latLonPopup: !this.state.latLonPopup
-    });
-  };
-
   onChangeDate = date => {
+    let errorMsg = checkIfDateIsValid(date, this.state.dateList);
     let path = getImgPath(date);
     this.setState({
       curOverlay: path,
-      date
+      date,
+      errorMsg
     });
   };
 
-  toggleAddMarker = () => {
-    let toggle = this.state.markerAdd;
+  // this is to change the map cursor to crosshairs and back
+  // during a pin drop
+  toggleDropPin = () => {
+    console.log("wheeee");
+    this.setState(prevState => ({
+      droppingPin: !prevState.droppingPin
+    }));
+  };
+
+  addMarker = e => {
+    if (!this.state.droppingPin) return;
+    const { markers } = this.state;
+    const marker = getShortLatLng(e.latlng);
+    const pngCoords = getPngCoords(e.latlng);
+    console.log("lt/ln value is: ", pngCoords);
+    markers.push({ ...marker, ...pngCoords });
     this.setState({
-      markerAdd: !toggle,
-      cursorStyle: {
-        cursor: CURSOR[!toggle]
-      }
+      markers,
+      droppingPin: false
     });
   };
 
@@ -108,44 +123,19 @@ class App extends Component {
     console.log(e);
   };
 
-  addMarker = e => {
-    if (this.state.markerAdd || this.state.latLonPopup) {
-      const { markers } = this.state;
-      const imgOrigin = { lat: 59.5, lng: -139.001 };
-      const newLat = e.latlng.lat.toFixed(6);
-      const newLng = e.latlng.lng.toFixed(6);
-      const imgLat = imgOrigin.lat - e.latlng.lat;
-      const imgLng = -1 * (imgOrigin.lng - e.latlng.lng);
-      const x = Math.round(imgLat * (6493 / 12.499));
-      const y = Math.round(imgLng * (7823 / 17.499));
-      markers.push({ lat: newLat, lng: newLng, x: x, y: y });
-
-      console.log("lt/ln value is: " + x + " and " + y);
-
-      this.setState({
-        markers,
-        markerAdd: false,
-        latLonPopup: false,
-        cursorStyle: { cursor: "grab" }
-      });
-    }
+  loading = e => {
+    this.setState({ loading: false });
   };
 
   render() {
     return (
       <div id="page">
+        {this.state.loading && <Spinner config={spinCfg} />}
         <IntroModal
           toggle={() => {
             this.toggleModal();
           }}
           show={this.state.modal}
-        />
-        <LatLonPopup
-          toggle={() => {
-            this.toggleLatLonPopup();
-          }}
-          show={this.state.latLonPopup}
-          addMarker={this.addMarker}
         />
         <div className={"mapContainer"} id="mapContainer">
           <CoaxMap
@@ -160,19 +150,21 @@ class App extends Component {
             addMarker={e => {
               this.addMarker(e);
             }}
-            mapCursor={this.state.cursorStyle}
+            pointer={CURSOR[this.state.droppingPin]}
+            loading={this.loading}
           />
         </div>
         <ColorBar toggleInfo={this.toggleModal} />
         <Dashboard
           displayChlor={this.state.displayChlor}
           toggleChlor={this.toggleChlor}
-          toggleLatLonPopup={this.toggleLatLonPopup}
-          toggleAddMarker={this.toggleAddMarker}
-          markerAdd={this.state.markerAdd}
+          toggleDropPin={this.toggleDropPin}
+          droppingPin={this.state.droppingPin}
+          addMarker={this.addMarker}
           onChangeDate={this.onChangeDate}
           curDate={this.state.date}
           dateList={this.state.dateList}
+          errorMsg={this.state.errorMsg}
         />
       </div>
     );

@@ -7,22 +7,26 @@ import {
 } from "reactstrap";
 
 class YearDropdown extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false
+    };
+  }
   updateYear = year => {
     let curDay = this.props.curDate.getDate();
     let curMonth = this.props.curDate.getMonth();
     let newDate = new Date(year, curMonth, curDay);
-    let error = "";
-    if (newDate > new Date()) {
-      error = "You may not select a date in the future.";
-    }
-
     this.props.onChangeDate(newDate);
-    this.props.updateErrorMsg(error);
   };
-
+  toggle = () => {
+    this.setState(prevState => ({
+      isOpen: !prevState.isOpen
+    }));
+  };
   render() {
     return (
-      <Dropdown isOpen={this.props.isOpen} toggle={this.props.toggle}>
+      <Dropdown isOpen={this.state.isOpen} toggle={this.toggle}>
         <DropdownToggle caret>
           {this.props.curDate.getFullYear()}
         </DropdownToggle>

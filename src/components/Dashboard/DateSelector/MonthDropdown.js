@@ -22,24 +22,30 @@ const MONTHS = {
 };
 
 class MonthDropdown extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false
+    };
+  }
   updateMonth = month => {
     let curDay = this.props.curDate.getDate();
     let curYear = this.props.curDate.getFullYear();
     let newDate = new Date(curYear, month, curDay);
-    let error = "";
-    if (newDate > new Date()) {
-      error = "You may not select a date in the future.";
-    }
-
     this.props.onChangeDate(newDate);
-    this.props.updateErrorMsg(error);
+  };
+
+  toggle = () => {
+    this.setState(prevState => ({
+      isOpen: !prevState.isOpen
+    }));
   };
 
   render() {
     let curMonth = this.props.curDate.getMonth();
     let curYear = this.props.curDate.getFullYear();
     return (
-      <Dropdown isOpen={this.props.isOpen} toggle={this.props.toggle}>
+      <Dropdown isOpen={this.state.isOpen} toggle={this.toggle}>
         <DropdownToggle caret>{MONTHS[curMonth]}</DropdownToggle>
         <DropdownMenu>
           {this.props.dateList ? (

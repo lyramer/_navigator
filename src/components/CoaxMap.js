@@ -26,6 +26,7 @@ class CoaxMap extends Component {
           [44.887012, -111.137695], // southwest corner
           [59.92199, -144.624023] // northeast corner
         ]}
+        style={{ cursor: this.props.pointer }}
       >
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -40,10 +41,11 @@ class CoaxMap extends Component {
             bounds={[[59.5, -139.001], [47.001, -121.502]]}
             url={this.props.curOverlay}
             opacity={0.9}
+            onLoad={() => this.props.loading()}
+            onChange={() => this.props.loading()}
           />
         )}
 
-        <div id="mapid" className="mapStyle" style={this.props.mapCursor} />
         {this.props.markers.map((position, idx) => (
           <Marker key={`marker-${idx}`} position={position}>
             <Popup>

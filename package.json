@@ -14,11 +14,14 @@
     "react-popup": "^0.9.3",
     "react-router-dom": "^5.0.0",
     "react-scripts": "1.1.5",
+    "react-sizes": "^2.0.0",
+    "react-tiny-spin": "^0.6.5",
     "reactstrap": "^6.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && echo 'if you are running this on the server, use npm run server-build to build the symlinks necessary to see the data'",
+    "build": "echo Hey!!! Please use npm run local-build if you want to build locally, or use npm run server-build if you want to deploy on the server",
+    "local-build": "react-scripts build && echo 'if you are running this on the server, use npm run server-build to build the symlinks necessary to see the data'",
     "server-build": "react-scripts build && chmod +x ./symlink.sh && ./symlink.sh",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

@@ -6,17 +6,57 @@ import {
   DropdownItem
 } from "reactstrap";
 
+const BLANK_MONTH = {
+  1: false,
+  2: false,
+  3: false,
+  4: false,
+  5: false,
+  6: false,
+  7: false,
+  8: false,
+  9: false,
+  10: false,
+  11: false,
+  12: false,
+  13: false,
+  14: false,
+  15: false,
+  16: false,
+  17: false,
+  18: false,
+  19: false,
+  20: false,
+  21: false,
+  22: false,
+  23: false,
+  24: false,
+  25: false,
+  26: false,
+  27: false,
+  28: false,
+  29: false,
+  30: false,
+  31: false
+};
+
 class DateDropdown extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false
+    };
+  }
   updateDay = day => {
     let curMonth = this.props.curDate.getMonth();
     let curYear = this.props.curDate.getFullYear();
     let newDate = new Date(curYear, curMonth, day);
-    let error = "";
-    if (newDate > new Date()) {
-      error = "You may not select a date in the future.";
-    }
     this.props.onChangeDate(newDate);
-    this.props.updateErrorMsg(error);
+  };
+  toggle = () => {
+    this.setState(prevState => ({
+      isOpen: !prevState.isOpen
+    }));
   };
 
   render() {
@@ -25,8 +65,8 @@ class DateDropdown extends Component {
     let curYear = this.props.curDate.getFullYear();
     return (
       <Dropdown
-        isOpen={this.props.isOpen}
-        toggle={this.props.toggle}
+        isOpen={this.state.isOpen}
+        toggle={this.toggle}
         className="date-dropdown"
       >
         <DropdownToggle caret>{curDate}</DropdownToggle>

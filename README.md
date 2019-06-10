@@ -1,5 +1,3 @@
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
-
 ## Table of Contents
 
 - [Overview](#overview)
@@ -8,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Overview
 
-This project was intiially developed Merrick Paquin-Mannington. This current version was built and is maintained by Andy Wynden. The heavy data lifter is Derek Jacoby, who takes the Sentinel-3 data and munches it through a pipeline to produce the imagery rendered in this application.
+This project was initially developed Merrick Paquin-Mannington. This current version was built and is maintained by [Andy Wynden](https://www.andywynden.com). The heavy data lifter is Derek Jacoby, who takes the Sentinel-3 data and munches it through a pipeline to produce the imagery rendered in this application.
 
 We used [React-Leaflet](https://react-leaflet.js.org/) as the backbone of this project. Many thanks to the lovely folks at [OSM](https://www.openstreetmap.org) without which our project and Leaflet would not be possible. [ReactStrap](https://reactstrap.github.io/) made it pretty.
 
@@ -19,3 +17,5 @@ Because the data we get from the nightly processing of images from Compute Canad
 ## Updating With New Map Data
 
 There is a file - curDates.txt, of which an old version exists in the public/OLCI folder for development purposes. The one that gets updated regularly is the OLCI folder which is in the mnt folder on the server. curDates.txt contains a newline separated list of all the dates for which we have imagery, and which is fetched and parsed on component load so that the available dates will be selectable in the date dropdown.
+
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Please go see their documentation if you have any questions regarding this.

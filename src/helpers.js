@@ -74,7 +74,6 @@ export function createValidDateList(dates) {
     }
   });
 
-  console.log("datelist: ", dateList);
   return dateList;
 }
 
@@ -93,7 +92,6 @@ export function findLatestDate(dateList) {
   let curDate, curMonth, curYear;
   let dateFound = false;
   while (!dateFound) {
-    console.log(validDate);
     curDate = validDate.getDate();
     curMonth = validDate.getMonth();
     curYear = validDate.getFullYear();
@@ -112,4 +110,33 @@ export function findLatestDate(dateList) {
     dateFound = true;
   }
   return validDate;
+}
+
+export function checkIfDateIsValid(date, dateList) {
+  let curDate = date.getDate();
+  let curMonth = date.getMonth();
+  let curYear = date.getFullYear();
+  if (
+    !dateList[curYear] ||
+    !dateList[curYear][curMonth] ||
+    !dateList[curYear][curMonth][curDate]
+  ) {
+    return "No data available";
+  }
+  return "";
+}
+
+export function getShortLatLng(latlng) {
+  const lat = latlng.lat.toFixed(6);
+  const lng = latlng.lng.toFixed(6);
+  return { lat, lng };
+}
+
+export function getPngCoords(latlng) {
+  const imgOrigin = { lat: 59.5, lng: -139.001 };
+  const imgLat = imgOrigin.lat - latlng.lat;
+  const imgLng = -1 * (imgOrigin.lng - latlng.lng);
+  const x = Math.round(imgLat * (6493 / 12.499));
+  const y = Math.round(imgLng * (7823 / 17.499));
+  return { x, y };
 }

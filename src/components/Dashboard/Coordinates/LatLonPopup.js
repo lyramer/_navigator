@@ -6,10 +6,13 @@ class LatLonPopup extends Component {
     super(props);
     this.state = {
       error: false,
-      errorType: ""
+      errorType: "",
+      show: false
     };
   }
 
+  // creates the latlon object to be pushed up to the addMarker method
+  // probably should be moved into helpers
   createLatLon = event => {
     event.preventDefault();
     this.setState({ error: false });
@@ -17,8 +20,11 @@ class LatLonPopup extends Component {
     let latLonRaw = event.currentTarget.latlon.value.replace(/ /g, "");
     if (latLonRe.test(latLonRaw)) {
       let latlon = latLonRaw.split(",");
-      let e = { latlng: { lat: Number(latlon[0]), lng: Number(latlon[1]) } };
-      this.props.addMarker(e);
+      let marker = {
+        latlng: { lat: Number(latlon[0]), lng: Number(latlon[1]) }
+      };
+      this.props.addNewMarker(marker);
+      this.setState({ show: false });
     } else {
       if (!latLonRaw || latLonRaw === "") {
         this.setState({
@@ -37,19 +43,26 @@ class LatLonPopup extends Component {
     }
     event.currentTarget.reset();
   };
+
+  toggle = () => {
+    this.props.toggleLatLonPopup();
+  };
+
   render() {
     return (
       <Modal
-        isOpen={this.props.show}
-        toggle={this.props.toggle}
+        isOpen={this.props.showLatLonPopup}
+        toggle={this.props.toggleLatLonPopup}
         className="latlon-modal"
       >
-        <ModalHeader toggle={this.props.toggle}>Enter Coordinates</ModalHeader>
+        <ModalHeader toggle={this.toggle}>Enter Coordinates</ModalHeader>
         <ModalBody>
           <form className="latlon" id="latLonForm" onSubmit={this.createLatLon}>
             <input type="text" name="latlon" />
           </form>
-          {this.state.error && <div class="error">{this.state.errorType}</div>}
+          {this.state.error && (
+            <div className="error">{this.state.errorType}</div>
+          )}
         </ModalBody>
         <ModalFooter>
           <Button
