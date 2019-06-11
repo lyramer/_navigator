@@ -41,8 +41,7 @@ class CoaxMap extends Component {
             bounds={[[59.5, -139.001], [47.001, -121.502]]}
             url={this.props.curOverlay}
             opacity={0.9}
-            onLoad={() => this.props.loading()}
-            onChange={() => this.props.loading()}
+            onLoad={setTimeout(() => this.props.loading(), 1000)}
           />
         )}
 

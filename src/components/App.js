@@ -26,7 +26,8 @@ const DEFAULT_VIEWPORT = {
 
 const spinCfg = {
   width: 12,
-  radius: 35
+  radius: 35,
+  color: "#ffffff"
 };
 
 const CURSOR = {
@@ -83,13 +84,14 @@ class App extends Component {
   };
 
   onChangeDate = date => {
-    let errorMsg = checkIfDateIsValid(date, this.state.dateList);
-    let path = getImgPath(date);
-    this.setState({
-      curOverlay: path,
-      date,
-      errorMsg,
-      loading: true
+    this.setState({ loading: true }, () => {
+      let errorMsg = checkIfDateIsValid(date, this.state.dateList);
+      let path = getImgPath(date);
+      this.setState({
+        curOverlay: path,
+        date,
+        errorMsg
+      });
     });
   };
 
