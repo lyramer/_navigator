@@ -142,16 +142,3 @@ export function getPngCoords(latlng) {
   const y = Math.round(imgLng * (7823 / 17.499));
   return { x, y };
 }
-
-export function getPixelVal(path, pngCoords) {
-  let pixelVal = -1;
-  Jimp.read(path)
-    .then(image => {
-      console.log(image.getPixelColor(pngCoords.x, pngCoords.y));
-      pixelVal = image.getPixelColor(pngCoords.x, pngCoords.y); // returns the colour of that pixel
-    })
-    .catch(err => {
-      console.log("no image found: ", err);
-    });
-  return pixelVal;
-}
