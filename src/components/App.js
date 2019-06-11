@@ -16,10 +16,8 @@ import {
   findLatestDate,
   checkIfDateIsValid,
   getShortLatLng,
-  getPngCoords,
-  getPixelVal
+  getPngCoords
 } from "../helpers";
-//import { getPixelData } from "./Coordinates";
 
 const DEFAULT_VIEWPORT = {
   center: [49.299, -124.695],
@@ -90,7 +88,8 @@ class App extends Component {
     this.setState({
       curOverlay: path,
       date,
-      errorMsg
+      errorMsg,
+      loading: true
     });
   };
 

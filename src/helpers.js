@@ -1,5 +1,3 @@
-import Jimp from "jimp/es";
-
 const BLANK_MONTH = {
   1: false,
   2: false,
