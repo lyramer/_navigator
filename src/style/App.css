@@ -124,7 +124,7 @@ body,
 
 @media (max-width: 1280px) {
   .leaflet-bottom {
-    bottom: 160px;
+    bottom: 120px;
   }
 }
 

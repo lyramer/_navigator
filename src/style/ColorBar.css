@@ -50,8 +50,8 @@
 
 @media (max-width: 1280px) {
   .colorbar {
-    bottom: 160px;
-    height: calc(100% - 160px);
+    bottom: 120px;
+    height: calc(100% - 120px);
   }
 }
 

@@ -6,9 +6,9 @@ import "../style/ColorBar.css";
 import IntroModal from "./Modal";
 import Dashboard from "./Dashboard";
 import CoaxMap from "./CoaxMap";
-import LatLonPopup from "./Dashboard/Coordinates/LatLonPopup";
 import ColorBar from "./ColorBar";
 import Spinner from "react-tiny-spin";
+import withSizes from "react-sizes";
 import {
   getImgPath,
   getDateJson,
@@ -16,7 +16,8 @@ import {
   findLatestDate,
   checkIfDateIsValid,
   getShortLatLng,
-  getPngCoords
+  getPngCoords,
+  getPixelVal
 } from "../helpers";
 //import { getPixelData } from "./Coordinates";
 
@@ -96,7 +97,6 @@ class App extends Component {
   // this is to change the map cursor to crosshairs and back
   // during a pin drop
   toggleDropPin = () => {
-    console.log("wheeee");
     this.setState(prevState => ({
       droppingPin: !prevState.droppingPin
     }));
@@ -109,6 +109,7 @@ class App extends Component {
     const pngCoords = getPngCoords(e.latlng);
     console.log("lt/ln value is: ", pngCoords);
     markers.push({ ...marker, ...pngCoords });
+    //let pixelVal = getPixelVal(this.state.curOverlay, pngCoords);
     this.setState({
       markers,
       droppingPin: false
@@ -165,10 +166,15 @@ class App extends Component {
           curDate={this.state.date}
           dateList={this.state.dateList}
           errorMsg={this.state.errorMsg}
+          mobileVersion={this.props.mobileVersion}
         />
       </div>
     );
   }
 }
 
-export default App;
+const mapSizesToProps = ({ width }) => ({
+  mobileVersion: width && width < 768 ? true : false
+});
+
+export default withSizes(mapSizesToProps)(App);

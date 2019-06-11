@@ -23,6 +23,8 @@ There is a file - curDates.txt, of which an old version exists in the public/OLC
 
 -Pinging the server to check if the image exists so we don't have a big fat nothing to display (with no error) if for some reason the imagery isn't found.
 
+-Make ModSquad png smaller. Jeez.
+
 -
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Please go see their documentation if you have any questions regarding this.

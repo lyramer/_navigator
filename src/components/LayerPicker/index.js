@@ -14,6 +14,7 @@ class LayerPicker extends Component {
     if (!this.props.mobileVersion) {
       return (
         <NavItem id="nav_data" className="layers">
+          {/* <span class="label">Layers</span> */}
           <i className="fas fa-layer-group" />
           <form id="dataproducts">
             <div className="layer">

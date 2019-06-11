@@ -5,7 +5,7 @@ import Coordinates from "./Coordinates";
 import LayerPicker from "../LayerPicker";
 import sizes from "react-sizes";
 
-const Dashboard = (props, mobileVersion) => (
+const Dashboard = props => (
   <Navbar className="fixed-bottom navbar-light">
     <Nav>
       {!props.mobileVersion && (
@@ -58,10 +58,6 @@ const Dashboard = (props, mobileVersion) => (
   </Navbar>
 );
 
-const mapSizesToProps = ({ width }) => ({
-  mobileVersion: width && width < 768 ? true : false
-});
-
-export default sizes(mapSizesToProps)(Dashboard);
+export default Dashboard;
 
 //export default Dashboard;
