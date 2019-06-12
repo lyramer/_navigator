@@ -8,7 +8,6 @@ import {
   Popup
 } from "react-leaflet";
 import { mapboxAccessToken } from "../mapboxAccessToken.json";
-import MapImg from "./MapImg";
 
 class CoaxMap extends Component {
   onViewportChanged = viewport => {};
