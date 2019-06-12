@@ -125,6 +125,7 @@ class App extends Component {
   };
 
   loading = e => {
+    console.log("loading");
     this.setState({ loading: false });
   };
 

@@ -8,6 +8,7 @@ import {
   Popup
 } from "react-leaflet";
 import { mapboxAccessToken } from "../mapboxAccessToken.json";
+import MapImg from "./MapImg";
 
 class CoaxMap extends Component {
   onViewportChanged = viewport => {};
@@ -39,9 +40,19 @@ class CoaxMap extends Component {
         {this.props.displayChlor && (
           <ImageOverlay
             bounds={[[59.5, -139.001], [47.001, -121.502]]}
-            url={this.props.curOverlay}
+            url={
+              this.props.curOverlay
+              // <img src={this.props.curOverlay} onLoad={this.props.loading} />
+              // <MapImg
+              //   imageURL={this.props.curOverlay}
+              //   onLoad={this.props.loading}
+              // />
+            }
             opacity={0.9}
-            onLoad={setTimeout(() => this.props.loading(), 1000)}
+            onLoad={this.props.loading}
+            onAdd={() => {
+              console.log("wheee add! this is the fastest one");
+            }}
           />
         )}
 
