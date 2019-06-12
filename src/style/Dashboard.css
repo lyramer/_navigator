@@ -22,6 +22,19 @@
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#295f60', endColorstr='#1f4749',GradientType=0 ); /* IE6-9 */
 }
 
+@media (max-width: 1280px) {
+  .navbar {
+    height: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    height: 80px;
+    padding: 10px 20px;
+  }
+}
+
 .navbar li {
   list-style: none;
 }
@@ -94,6 +107,7 @@ select:focus {
   border-radius: 1px;
   color: #e6ebe0;
   height: 2.5rem;
+  white-space: nowrap;
 }
 
 .btn:focus {
@@ -223,10 +237,6 @@ select:focus {
 }
 
 @media (max-width: 768px) {
-  .navbar {
-    height: 100px;
-    padding: 10px 20px;
-  }
   .nav {
     height: 100%;
     justify-content: space-around;
