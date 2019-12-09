@@ -15,6 +15,8 @@ We used [React-Leaflet](https://react-leaflet.js.org/) as the backbone of this p
 
 Because the data we get from the nightly processing of images from Compute Canada is in a seperate folder, I've created a script which re-creates the symlink to this folder inside the build folder. This means that **during deployment on the server, use npm run server-build**. On your local machine, running npm run build is just fine as you'll need to import a handful of overlays so that map data shows up properly
 
+Place those overlays in an OLCI folder in the public directory before doing an npm run local-build and they will be copied properly. They are not checked in because then they would overwrite the symlink in the server version.
+
 ## Updating With New Map Data
 
 There is a file - curDates.txt, of which an old version exists in the public/OLCI folder for development purposes. The one that gets updated regularly is the OLCI folder which is in the mnt folder on the server. curDates.txt contains a newline separated list of all the dates for which we have imagery, and which is fetched and parsed on component load so that the available dates will be selectable in the date dropdown.

@@ -13,10 +13,11 @@ class CoaxMap extends Component {
   onViewportChanged = viewport => {};
 
   render() {
+    console.log("wwoww");
     return (
       <Map
         // mousemove={e => this.mouseMove(e)}
-        mouseMove={this.props.mouseMove}
+        // mouseMove={this.props.mouseMove}
         onViewportChanged={this.onViewportChanged()}
         viewport={this.props.viewport}
         doubleClickZoom={true}
