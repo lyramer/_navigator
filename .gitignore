@@ -3,6 +3,9 @@
 # dependencies
 /node_modules
 
+#server
+/server/node_modules
+
 # testing
 /coverage
 

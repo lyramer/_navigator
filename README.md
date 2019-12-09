@@ -27,6 +27,12 @@ There is a file - curDates.txt, of which an old version exists in the public/OLC
 
 -Make ModSquad png smaller. Jeez.
 
+## notes
+
+on windows concurrently does not always work from a git shell. You may need to remove the $ in node_modules/spawn-default-shell/src/get-shell.js per this issue: https://github.com/angular/quickstart/issues/359
+
+to run navigate to the server directory and execute "npm start" from there so that both server and client are started.
+
 -
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Please go see their documentation if you have any questions regarding this.

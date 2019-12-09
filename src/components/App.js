@@ -105,6 +105,9 @@ class App extends Component {
   };
 
   addMarker = e => {
+    console.log("marker: ", getShortLatLng(e.latlng));
+    //var position = this.CoaxMap.getLonLatFromPixel(e.xy);
+    //console.log("Lat, Lon : "+position.lon.toFixed(3),position.lat.toFixed(3));
     if (!this.state.droppingPin) return;
     const { markers } = this.state;
     const marker = getShortLatLng(e.latlng);
