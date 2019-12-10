@@ -17,6 +17,12 @@ Because the data we get from the nightly processing of images from Compute Canad
 
 Place those overlays in an OLCI folder in the public directory before doing an npm run local-build and they will be copied properly. They are not checked in because then they would overwrite the symlink in the server version.
 
+## deployment
+
+server deployment consists of sync'ing the project on the server, then running server-build as above. The next step is to add a proxy-pass statement to your nginx server block for each route in the API on the server side. http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass
+
+The nginx server block can simply point to the build folder for the client side, but the server side will have to be explicitly started. Just with the command "node server.js" for testing purposes, but for long-term deployment the use of pm2 or some other task runner is advised. This will allow the server to survive reboots.
+
 ## Updating With New Map Data
 
 There is a file - curDates.txt, of which an old version exists in the public/OLCI folder for development purposes. The one that gets updated regularly is the OLCI folder which is in the mnt folder on the server. curDates.txt contains a newline separated list of all the dates for which we have imagery, and which is fetched and parsed on component load so that the available dates will be selectable in the date dropdown.

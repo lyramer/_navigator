@@ -55,7 +55,7 @@ class App extends Component {
 
   componentDidMount() {
     // gets the latest list of dates
-    console.log("mounty");
+    //console.log("mounty");
     fetch("/OLCI/curDates.txt")
       .then(res => res.text())
       .then(
@@ -105,14 +105,22 @@ class App extends Component {
   };
 
   addMarker = e => {
-    console.log("marker: ", getShortLatLng(e.latlng));
-    fetch('/express_backend')
+    //console.log("marker: ", getShortLatLng(e.latlng));
+    //console.log("screen: ", getPngCoords(e.latlng));
+    let x = getPngCoords(e.latlng);
+    let yr = this.state.date.getFullYear().toString();
+    let m = (this.state.date.getMonth() + 1).toString();
+    let d = this.state.date.getDate().toString();
+    d.length === 1 && (d = "0" + d);
+    m.length === 1 && (m = "0" + m);
+    //console.log(this.state.date);
+    fetch('/express_backend?yr='+yr+'&m='+m+'&d='+d+'&x='+x.x+'&y='+x.y)
     .then(response => {console.log(response);})
     if (!this.state.droppingPin) return;
     const { markers } = this.state;
     const marker = getShortLatLng(e.latlng);
     const pngCoords = getPngCoords(e.latlng);
-    console.log("lt/ln value is: ", pngCoords);
+    //console.log("lt/ln value is: ", pngCoords);
     markers.push({ ...marker, ...pngCoords });
     this.setState({
       markers,
