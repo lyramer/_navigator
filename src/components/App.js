@@ -114,7 +114,7 @@ class App extends Component {
     d.length === 1 && (d = "0" + d);
     m.length === 1 && (m = "0" + m);
     //console.log(this.state.date);
-    fetch('/express_backend?yr='+yr+'&m='+m+'&d='+d+'&x='+x.x+'&y='+x.y)
+    fetch('/express_backend?yr='+yr+'&m='+m+'&d='+d+'&x='+x.y+'&y='+x.x)
     .then(response => {console.log(response);})
     if (!this.state.droppingPin) return;
     const { markers } = this.state;

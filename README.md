@@ -23,6 +23,8 @@ server deployment consists of sync'ing the project on the server, then running s
 
 The nginx server block can simply point to the build folder for the client side, but the server side will have to be explicitly started. Just with the command "node server.js" for testing purposes, but for long-term deployment the use of pm2 or some other task runner is advised. This will allow the server to survive reboots.
 
+make sure libnetcdf-dev is on the server per instructions here: https://www.npmjs.com/package/netcdf4
+
 ## Updating With New Map Data
 
 There is a file - curDates.txt, of which an old version exists in the public/OLCI folder for development purposes. The one that gets updated regularly is the OLCI folder which is in the mnt folder on the server. curDates.txt contains a newline separated list of all the dates for which we have imagery, and which is fetched and parsed on component load so that the available dates will be selectable in the date dropdown.
