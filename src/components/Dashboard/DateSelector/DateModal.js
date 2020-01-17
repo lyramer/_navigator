@@ -20,7 +20,7 @@ class DateModal extends Component {
     return (
       <div className="modal-btn">
         <Button onClick={this.toggle} className="date-btn">
-          <i class="far fa-calendar" />
+          <i className="far fa-calendar" />
         </Button>
         <Modal
           isOpen={this.state.show}

@@ -49,7 +49,9 @@ class App extends Component {
       viewport: DEFAULT_VIEWPORT,
       zoneVisible: false,
       errorMsg: "",
-      loading: true
+      loading: true,
+      infoBox: {}
+
     };
   }
 
@@ -114,8 +116,22 @@ class App extends Component {
     d.length === 1 && (d = "0" + d);
     m.length === 1 && (m = "0" + m);
     //console.log(this.state.date);
-    fetch('/express_backend?yr='+yr+'&m='+m+'&d='+d+'&x='+x.x+'&y='+x.y)
-    .then(response => {console.log(response);})
+    try {
+      fetch('/express_backend?yr='+yr+'&m='+m+'&d='+d+'&x='+x.x+'&y='+x.y)
+      .then(response => response.json())
+      .then(result => {
+        if (result.error) {
+          console.log("Error: ", result.error);
+          return;
+        }
+        if (!result.lat) this.setState({infoBox: undefined});
+        else this.setState({infoBox: {...result}});
+      })
+    } catch (error) {
+      console.log("Error:", error)
+    }
+
+
     if (!this.state.droppingPin) return;
     const { markers } = this.state;
     const marker = getShortLatLng(e.latlng);
@@ -168,7 +184,7 @@ class App extends Component {
             loading={this.loading}
           />
         </div>
-        <ColorBar toggleInfo={this.toggleModal} />
+        <ColorBar toggleInfo={this.toggleModal} infoBox={this.state.infoBox} />
         <Dashboard
           displayChlor={this.state.displayChlor}
           toggleChlor={this.toggleChlor}
