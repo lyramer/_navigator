@@ -57,8 +57,8 @@ class App extends Component {
 
   componentDidMount() {
     // gets the latest list of dates
-    //console.log("mounty");
-    fetch("/OLCI/curDates.txt")
+    console.log("mounty");
+    fetch("/p3aqua/OLCI/curDates.txt")
       .then(res => res.text())
       .then(
         result => {
@@ -68,16 +68,19 @@ class App extends Component {
           let curOverlay = getImgPath(date);
           let errorMsg = checkIfDateIsValid(date, dateList);
           this.setState({ dateList, date, curOverlay, errorMsg });
+          console.log("gotDates: ", date);
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
         errorMsg => {
+          console.log("notgotdates");
           this.setState({
             errorMsg
           });
         }
       );
+        console.log("out of mounty");
   }
 
   toggleModal = () => {

@@ -17,7 +17,7 @@ const Dashboard = props => (
           >
             <img
               className="logo"
-              src="/images/spectral_logo.png"
+              src="/p3aqua/images/spectral_logo.png"
               alt="UVic Spectral Lab Logo"
             />
           </a>
@@ -28,7 +28,7 @@ const Dashboard = props => (
           >
             <img
               className="logo"
-              src="/images/modsquad_light.png"
+              src="/p3aqua/images/modsquad_light.png"
               alt="MOD Squad Lab Logo"
             />
           </a>

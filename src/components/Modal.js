@@ -10,30 +10,30 @@ const FunderLogo = props => (
 const LogoList = [
   {
     url: "https://www.uvic.ca/socialsciences/geography/index.php",
-    path: "/images/uvic_logo_white.png",
+    path: "/p3aqua/images/uvic_logo_white.png",
     alt: "Logo for University of Victoria"
   },
   {
     url: "http://meopar.ca/",
-    path: "/images/meopar_logo_white.png",
+    path: "/p3aqua/images/meopar_logo_white.png",
     alt: "Logo for MEOPAR"
   },
 
   {
     url: "http://www.oceannetworks.ca/",
-    path: "/images/onc_logo.png",
+    path: "/p3aqua/images/onc_logo.png",
     alt: "Logo for Ocean Network Canada"
   },
 
   {
     url: "https://www.hakai.org/",
-    path: "/images/hakai_logo.png",
+    path: "/p3aqua/images/hakai_logo.png",
     alt: "Logo for Hakai Institute"
   },
 
   {
     url: "https://www.psf.ca/",
-    path: "/images/psf_logo.png",
+    path: "/p3aqua/images/psf_logo.png",
     alt: "Logo for Pacific Salmon Foundation"
   }
 ];
@@ -68,7 +68,7 @@ const IntroModal = props => (
           rel="noopener noreferrer"
         >
           <img
-            src="/images/eesa_logo_white.png"
+            src="/p3aqua/images/eesa_logo_white.png"
             alt="Logo for European Space Agency"
           />
         </a>

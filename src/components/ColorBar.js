@@ -26,7 +26,7 @@ class ColorBar extends Component {
         </div>
 
         <img
-          src="/images/chl_colorbar.png"
+          src="/p3aqua/images/chl_colorbar.png"
           alt="Color Scale"
           className="colorscale"
         />
