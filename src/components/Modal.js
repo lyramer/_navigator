@@ -43,10 +43,8 @@ const IntroModal = props => (
     <ModalHeader toggle={props.toggle}>Algae Explorer</ModalHeader>
     <ModalBody>
       <p>
-        Welcome to Algae Explorer! This is v1.0 of the map, built in
-        collaboration with UVic's ModSquad from the Computer Science Department.
+        Welcome to P3Aqua - Preserve, Predict, and Protect our oceans! This is V0.1 of the Earth Data Store based Ocean application, built by the University of Victoria Mod Squad in collaboration with:
       </p>
-      <p>Funding for this project comes from</p>
       <div className="logos">
         {LogoList.map((logo, index) => (
           <FunderLogo
