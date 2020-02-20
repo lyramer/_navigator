@@ -42,7 +42,7 @@
   color: #e6ebe0;
   padding: 10px;
   cursor: pointer;
-  text-align:end;
+  text-align: end;
 }
 
 .colorbar .info i {
@@ -65,10 +65,10 @@
 
 .colorbar .infobox {
   z-index: 1000000000;
-  background:rgb(41, 95, 96);
+  background: #066c99;
   transition: background-color 0.5s linear;
   color: #e6ebe0;
-  width:100%;
+  width: 100%;
   font-size: 1.2em;
   padding: 5px;
 }
