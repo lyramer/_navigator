@@ -2,24 +2,20 @@
   height: 100px;
   display: flex;
   color: #e6ebe0;
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#295f60+0,1f4749+94 */
-  background: rgb(41, 95, 96); /* Old browsers */
-  background: -moz-linear-gradient(
-    top,
-    rgba(41, 95, 96, 1) 0%,
-    rgba(31, 71, 73, 1) 94%
-  ); /* FF3.6-15 */
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#066c99+0,004770+99 */
+  background: #066c99; /* Old browsers */
+  background: -moz-linear-gradient(top, #066c99 0%, #004770 99%); /* FF3.6-15 */
   background: -webkit-linear-gradient(
     top,
-    rgba(41, 95, 96, 1) 0%,
-    rgba(31, 71, 73, 1) 94%
+    #066c99 0%,
+    #004770 99%
   ); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(
     to bottom,
-    rgba(41, 95, 96, 1) 0%,
-    rgba(31, 71, 73, 1) 94%
+    #066c99 0%,
+    #004770 99%
   ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#295f60', endColorstr='#1f4749',GradientType=0 ); /* IE6-9 */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#066c99', endColorstr='#004770',GradientType=0 ); /* IE6-9 */
 }
 
 @media (max-width: 1280px) {
@@ -171,8 +167,25 @@ select:focus {
   align-items: center;
 }
 
-.nav .logos a {
+.nav .logos > * {
   margin-right: 10px;
+}
+
+.logos .site-logo {
+  font-size: 1.4em;
+  font-family: "Comfortaa", Arial, Helvetica, sans-serif;
+  margin-right: 15px;
+}
+
+.site-logo > * {
+  font-family: inherit;
+}
+
+.site-logo .three {
+  line-height: 0.5em;
+  font-size: 0.7em;
+  vertical-align: super;
+  margin-left: 3px;
 }
 
 .nav li {

@@ -10,17 +10,11 @@ const Dashboard = props => (
     <Nav>
       {!props.mobileVersion && (
         <li className="logos">
-          <a
-            href="http://uvicspectral.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              className="logo"
-              src="/p3aqua/images/spectral_logo.png"
-              alt="UVic Spectral Lab Logo"
-            />
-          </a>
+          <div className="site-logo">
+            <span className="p">P</span>
+            <span className="three">3</span>
+            <span className="aqua">Aqua</span>
+          </div>
           <a
             href="http://yvonnecoady.com/"
             target="_blank"

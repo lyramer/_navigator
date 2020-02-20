@@ -14,36 +14,38 @@ const LogoList = [
     alt: "Logo for University of Victoria"
   },
   {
-    url: "http://meopar.ca/",
-    path: "/p3aqua/images/meopar_logo_white.png",
-    alt: "Logo for MEOPAR"
+    url: "http://mitacs.ca/",
+    path: "/p3aqua/images/mitacs.png",
+    alt: "Logo for MITACS"
   },
 
   {
-    url: "http://www.oceannetworks.ca/",
-    path: "/p3aqua/images/onc_logo.png",
-    alt: "Logo for Ocean Network Canada"
+    url: "http://www.microsoft.com/",
+    path: "/p3aqua/images/MSnewlogo.png",
+    alt: "Logo for Microsoft"
   },
 
   {
-    url: "https://www.hakai.org/",
-    path: "/p3aqua/images/hakai_logo.png",
-    alt: "Logo for Hakai Institute"
+    url: "https://www.digitalsupercluster.ca/",
+    path: "/p3aqua/images/Supercluster_LogosFinals_CDTS_White_00-1.png",
+    alt: "Logo for Canada's Digital Supercluster"
   },
 
   {
-    url: "https://www.psf.ca/",
-    path: "/p3aqua/images/psf_logo.png",
-    alt: "Logo for Pacific Salmon Foundation"
+    url: "https://www.qvirt.com/",
+    path: "/p3aqua/images/white_qvirt.png",
+    alt: "Logo for QVirt"
   }
 ];
 
 const IntroModal = props => (
   <Modal isOpen={props.show} toggle={props.toggle} className={props.className}>
-    <ModalHeader toggle={props.toggle}>Algae Explorer</ModalHeader>
+    <ModalHeader toggle={props.toggle}>P3Aqua</ModalHeader>
     <ModalBody>
       <p>
-        Welcome to P3Aqua - Preserve, Predict, and Protect our oceans! This is V0.1 of the Earth Data Store based Ocean application, built by the University of Victoria Mod Squad in collaboration with:
+        Welcome to P3Aqua - Preserve, Predict, and Protect our oceans! This is
+        V0.1 of the Earth Data Store based Ocean application, built by the
+        University of Victoria Mod Squad in collaboration with:
       </p>
       <div className="logos">
         {LogoList.map((logo, index) => (

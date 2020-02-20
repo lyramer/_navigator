@@ -28,7 +28,7 @@
     "eject": "react-scripts eject"
   },
   "proxy": "https://qvirt.com",
-  "homepage": "/p3aqua/" ,
+  "homepage": "/p3aqua/",
   "browserslist": {
     "production": [
       ">0.2%",

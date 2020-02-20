@@ -39,14 +39,14 @@ class LayerModal extends Component {
               <div className="layer">
                 <input
                   type="radio"
-                  label="None"
-                  id="layer_null"
-                  value="none"
+                  label="Dissolved Organic Matter"
+                  id="layer_orgm"
+                  value="orgm"
                   name="layer"
                   checked={!this.props.displayChlor}
                   onChange={e => this.handleChange(e)}
                 />
-                <label htmlFor="layer_null">None</label>
+                <label htmlFor="layer_orgm">Dissolved Organic Matter</label>
               </div>
               <div className="layer">
                 <input
