@@ -1,212 +1,159 @@
-import React, { Component } from "react";
-import "../style/App.css";
-import "../style/Dashboard.css";
-import "../style/Popup.css";
-import "../style/ColorBar.css";
-import IntroModal from "./Modal";
-import Dashboard from "./Dashboard";
-import CoaxMap from "./CoaxMap";
-import ColorBar from "./ColorBar";
-import Spinner from "react-tiny-spin";
-import withSizes from "react-sizes";
-import {
-  getImgPath,
-  getDateJson,
-  createValidDateList,
-  findLatestDate,
-  checkIfDateIsValid,
-  getShortLatLng,
-  getPngCoords
-} from "../helpers";
+import React, { useState } from "react";
+import Map from "./Map";
+import { Layers, TileLayer, VectorLayer } from "./Layers";
+import { Style, Icon } from "ol/style";
+import Feature from "ol/Feature";
+import Point from "ol/geom/Point";
+import { osm, vector, wmts } from "./DataSources";
+import { fromLonLat, get } from "ol/proj";
+import GeoJSON from "ol/format/GeoJSON";
+import { Controls, FullScreenControl } from "./Controls";
+import FeatureStyles from "./Features/Styles";
 
-const DEFAULT_VIEWPORT = {
-  center: [49.299, -124.695],
-  zoom: 8
-};
+import mapConfig from "./DataSources/geojson_data.json";
+import "./App.css";
 
-const spinCfg = {
-  width: 12,
-  radius: 35,
-  color: "#ffffff"
-};
+const geojsonObject = mapConfig.geojsonObject;
+const geojsonObject2 = mapConfig.geojsonObject2;
+const markersLonLat = [mapConfig.kansasCityLonLat, mapConfig.blueSpringsLonLat];
 
-const CURSOR = {
-  true: "crosshair",
-  false: "grab"
-};
-
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      curOverlay: "",
-      date: new Date(),
-      dateList: undefined,
-      displayChlor: true,
-      droppingPin: false,
-      markers: [],
-      modal: false, //TODO make true. false for dev only
-      viewport: DEFAULT_VIEWPORT,
-      zoneVisible: false,
-      errorMsg: "",
-      loading: true,
-      infoBox: {}
-
-    };
-  }
-
-  componentDidMount() {
-    // gets the latest list of dates
-    console.log("mounty");
-    fetch("/p3aqua/OLCI/curDates.txt")
-      .then(res => res.text())
-      .then(
-        result => {
-          let dates = getDateJson(result.split("\n"));
-          let dateList = createValidDateList(dates);
-          let date = findLatestDate(dateList);
-          let curOverlay = getImgPath(date);
-          let errorMsg = checkIfDateIsValid(date, dateList);
-          this.setState({ dateList, date, curOverlay, errorMsg });
-          console.log("gotDates: ", date);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        errorMsg => {
-          console.log("notgotdates");
-          this.setState({
-            errorMsg
-          });
-        }
-      );
-        console.log("out of mounty");
-  }
-
-  toggleModal = () => {
-    this.setState({
-      modal: !this.state.modal
+function addMarkers(lonLatArray) {
+  var iconStyle = new Style({
+    image: new Icon({
+      anchorXUnits: "fraction",
+      anchorYUnits: "pixels",
+      src: mapConfig.markerImage32,
+    }),
+  });
+  let features = lonLatArray.map((item) => {
+    let feature = new Feature({
+      geometry: new Point(fromLonLat(item)),
     });
-  };
+    feature.setStyle(iconStyle);
+    return feature;
+  });
+  return features;
+}
 
-  onChangeDate = date => {
-    this.setState({ loading: true }, () => {
-      let errorMsg = checkIfDateIsValid(date, this.state.dateList);
-      let path = getImgPath(date);
-      this.setState({
-        curOverlay: path,
-        date,
-        errorMsg
-      });
-    });
-  };
+const newCenter = [-101.608420, 78.447431];
 
-  // this is to change the map cursor to crosshairs and back
-  // during a pin drop
-  toggleDropPin = () => {
-    this.setState(prevState => ({
-      droppingPin: !prevState.droppingPin
-    }));
-  };
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            center: mapConfig.center,
+            zoom: 4,
+            wmtsData: null,
+            showLayer1: true,
+            showLayer2: true,
+            showMarker: false,
+            features: addMarkers(markersLonLat),
+            error: null
+        };
+    }
 
-  addMarker = e => {
-    //console.log("marker: ", getShortLatLng(e.latlng));
-    //console.log("screen: ", getPngCoords(e.latlng));
-    let x = getPngCoords(e.latlng);
-    let yr = this.state.date.getFullYear().toString();
-    let m = (this.state.date.getMonth() + 1).toString();
-    let d = this.state.date.getDate().toString();
-    d.length === 1 && (d = "0" + d);
-    m.length === 1 && (m = "0" + m);
-    //console.log(this.state.date);
-    try {
-      fetch('/express_backend?yr='+yr+'&m='+m+'&d='+d+'&x='+x.x+'&y='+x.y)
-      .then(response => response.json())
-      .then(result => {
-        if (result.error) {
-          console.log("Error: ", result.error);
-          return;
-        }
-        if (!result.lat) this.setState({infoBox: undefined});
-        else this.setState({infoBox: {...result}});
-      })
-    } catch (error) {
-      console.log("Error:", error)
+    componentDidMount(){
+        fetch("https://cors-anywhere.herokuapp.com/http://basemap.arctic-sdi.org/mapcache/wmts/?request=GetCapabilities&service=wmts")
+            .then(res => res.text())
+            .then(async (text) => {
+                console.log(text)
+                const wmtsData = await wmts(text);
+                this.setState({ wmtsData });
+            },
+            // Note: it's important to handle errors here
+            // instead of a catch() block so that we don't swallow
+            // exceptions from actual bugs in components.
+            (error) => {
+            this.setState({
+                error
+            });
+            }
+        )
+        
     }
 
 
-    if (!this.state.droppingPin) return;
-    const { markers } = this.state;
-    const marker = getShortLatLng(e.latlng);
-    const pngCoords = getPngCoords(e.latlng);
-    //console.log("lt/ln value is: ", pngCoords);
-    markers.push({ ...marker, ...pngCoords });
-    this.setState({
-      markers,
-      droppingPin: false
-    });
-  };
+//   const [center, setCenter] = useState(mapConfig.center);
+//   const [zoom, setZoom] = useState(2);
 
-  toggleChlor = displayChlor => {
-    this.setState({ displayChlor });
-  };
+//   const [showLayer1, setShowLayer1] = useState(true);
+//   const [showLayer2, setShowLayer2] = useState(true);
+//   const [showMarker, setShowMarker] = useState(false);
 
-  mouseMove = e => {
-    console.log(e);
-  };
+//   const [features, setFeatures] = useState(addMarkers(markersLonLat));
 
-  loading = e => {
-    console.log("loading");
-    this.setState({ loading: false });
-  };
 
-  render() {
+      toggleLayerMarker = (objectID, val) => {
+            this.setState({[objectID]: val})
+      }
+
+
+render() {
+    let features = this.state.features;
     return (
-      <div id="page">
-        {this.state.loading && <Spinner config={spinCfg} />}
-        <IntroModal
-          toggle={() => {
-            this.toggleModal();
-          }}
-          show={this.state.modal}
-        />
-        <div className={"mapContainer"} id="mapContainer">
-          <CoaxMap
-            mouseMove={e => {
-              this.mouseMove(e);
-            }}
-            viewport={this.state.viewport}
-            curOverlay={this.state.curOverlay}
-            displayChlor={this.state.displayChlor}
-            zoneVisible={this.state.zoneVisible}
-            markers={this.state.markers}
-            addMarker={e => {
-              this.addMarker(e);
-            }}
-            pointer={CURSOR[this.state.droppingPin]}
-            loading={this.loading}
-          />
+        <div>
+          {/* <Map center={fromLonLat(center)} zoom={zoom}> */}
+          <Map center={fromLonLat(newCenter)} zoom={this.state.zoom}>
+            <Layers>
+            <TileLayer source={osm()} zIndex={0} />
+            { this.state.wmtsData && 
+            <TileLayer source={this.state.wmtsData} zIndex={0} />}
+
+              {this.state.showLayer1 && (
+                <VectorLayer
+                  source={vector({
+                    features: new GeoJSON().readFeatures(geojsonObject, {
+                      featureProjection: get("EPSG:3857"),
+                    }),
+                  })}
+                  style={FeatureStyles.MultiPolygon}
+                />
+              )}
+              {this.state.showLayer2 && (
+                <VectorLayer
+                  source={vector({
+                    features: new GeoJSON().readFeatures(geojsonObject2, {
+                      featureProjection: get("EPSG:3857"),
+                    }),
+                  })}
+                  style={FeatureStyles.MultiPolygon}
+                />
+              )}
+              {this.state.showMarker && <VectorLayer source={vector({ features })} />}
+            </Layers>
+            <Controls>
+              <FullScreenControl />
+            </Controls>
+          </Map>
+          <div>
+            <input
+              type="checkbox"
+              checked={this.state.showLayer1}
+              onChange={(event) => this.toggleLayerMarker("showLayer1", event.target.checked)}
+            />{" "}
+            Johnson County
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              checked={this.state.showLayer2}
+              onChange={(event) => this.toggleLayerMarker("showLayer2", event.target.checked)}
+            />{" "}
+            Wyandotte County
+          </div>
+          <hr />
+          <div>
+            <input
+              type="checkbox"
+              checked={this.state.showMarker}
+              onChange={(event) => this.toggleLayerMarker("showMarker", event.target.checked)}
+            />{" "}
+            Show markers
+          </div>
         </div>
-        <ColorBar toggleInfo={this.toggleModal} infoBox={this.state.infoBox} />
-        <Dashboard
-          displayChlor={this.state.displayChlor}
-          toggleChlor={this.toggleChlor}
-          toggleDropPin={this.toggleDropPin}
-          droppingPin={this.state.droppingPin}
-          addMarker={this.addMarker}
-          onChangeDate={this.onChangeDate}
-          curDate={this.state.date}
-          dateList={this.state.dateList}
-          errorMsg={this.state.errorMsg}
-          mobileVersion={this.props.mobileVersion}
-        />
-      </div>
-    );
-  }
+      );
 }
 
-const mapSizesToProps = ({ width }) => ({
-  mobileVersion: width && width < 768 ? true : false
-});
+};
 
-export default withSizes(mapSizesToProps)(App);
+export default App;
