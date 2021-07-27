@@ -1,17 +1,29 @@
 import React, { useState } from "react";
 import Map from "./Map";
-import { Layers, TileLayer, VectorLayer } from "./Layers";
+import { Layers, TileLayer, VectorLayer, ImageLayer } from "./Layers";
 import { Style, Icon } from "ol/style";
 import Feature from "ol/Feature";
+import Static from 'ol/source/ImageStatic';
 import Point from "ol/geom/Point";
 import { osm, vector, wmts } from "./DataSources";
 import { fromLonLat, get } from "ol/proj";
 import GeoJSON from "ol/format/GeoJSON";
 import { Controls, FullScreenControl } from "./Controls";
 import FeatureStyles from "./Features/Styles";
-
+import {register} from 'ol/proj/proj4';
+import proj4 from 'proj4';
+import {get as getProjection} from 'ol/proj';
 import mapConfig from "./DataSources/geojson_data.json";
 import "./App.css";
+import { getWidth, getHeight } from "ol/extent";
+
+
+register(proj4);
+proj4.defs("EPSG:3573","+proj=laea +lat_0=90 +lon_0=-100 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs");
+
+const projection = getProjection('EPSG:3573');
+
+
 
 const geojsonObject = mapConfig.geojsonObject;
 const geojsonObject2 = mapConfig.geojsonObject2;
@@ -36,6 +48,20 @@ function addMarkers(lonLatArray) {
 }
 
 const newCenter = [-101.608420, 78.447431];
+//const imgExtent = transform([[-178.85389931430257, 84.6673593606421],[-41.94695494774296, 36.265663798516556]])
+const imgExtent = [[-584160.94, -115096.01], [4896529.62, -3053391.61]]
+const img = new Static({
+  url:"/assets/MAP_IFD_PROB_0.5_CanSIPSv2_NCGR_calibrated_im052021_fcst.png",
+  projection: projection,
+  imageExtent: imgExtent,
+  imageLoadFunction: function (image, src) {
+    image.getImage().src = src;
+    image.getImage().width = getWidth(imgExtent);;
+    image.getImage().height = getHeight(imgExtent);
+  }
+})
+
+console.log("img", img)
 
 class App extends React.Component {
     constructor(props) {
@@ -45,7 +71,7 @@ class App extends React.Component {
             zoom: 4,
             wmtsData: null,
             showLayer1: true,
-            showLayer2: true,
+            showLayer2: false,
             showMarker: false,
             features: addMarkers(markersLonLat),
             error: null
@@ -84,8 +110,10 @@ class App extends React.Component {
 
 
       toggleLayerMarker = (objectID, val) => {
+        console.log(objectID + " has changed to " + val)
             this.setState({[objectID]: val})
       }
+
 
 
 render() {
@@ -100,12 +128,8 @@ render() {
             <TileLayer source={this.state.wmtsData} zIndex={0} />}
 
               {this.state.showLayer1 && (
-                <VectorLayer
-                  source={vector({
-                    features: new GeoJSON().readFeatures(geojsonObject, {
-                      featureProjection: get("EPSG:3857"),
-                    }),
-                  })}
+                <ImageLayer
+                  source={img}
                   style={FeatureStyles.MultiPolygon}
                 />
               )}

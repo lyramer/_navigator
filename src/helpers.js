@@ -1,3 +1,21 @@
+// for Arctic-SDI WMTS
+import {register} from 'ol/proj/proj4';
+import proj4 from 'proj4';
+import {get as getProjection} from 'ol/proj';
+import {transformExtent} from 'ol/proj';
+
+
+
+register(proj4);
+proj4.defs("EPSG:3573","+proj=laea +lat_0=90 +lon_0=-100 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs");
+
+export const projection = getProjection('EPSG:3573');
+
+export function transform(extent) {
+  return transformExtent(extent, 'EPSG:3857', projection);
+}
+
+
 const BLANK_MONTH = {
   1: false,
   2: false,
@@ -146,3 +164,5 @@ export function getPngCoords(latlng) {
   console.log("x: "+x+" y: "+y+" imgLng: "+imgLng+" imgLat: "+imgLat+" lng: "+latlng.lng+" lat: "+latlng.lat+"metersOrigin: "+metersOrigin+" metersCurrent: "+metersCurrent);
   return { x, y };
 }
+
+
