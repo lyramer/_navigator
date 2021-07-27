@@ -53,9 +53,31 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            center: newCenter,
             zoom: 4,
+            wmtsData: null,
         };
     }
+
+    componentDidMount(){
+      fetch("https://cors-anywhere.herokuapp.com/http://basemap.arctic-sdi.org/mapcache/wmts/?request=GetCapabilities&service=wmts")
+          .then(res => res.text())
+          .then(async (text) => {
+              console.log(text)
+              const wmtsData = await wmts(text);
+              this.setState({ wmtsData });
+          },
+          // Note: it's important to handle errors here
+          // instead of a catch() block so that we don't swallow
+          // exceptions from actual bugs in components.
+          (error) => {
+          this.setState({
+              error
+          });
+          }
+      )
+      
+  }
 
 render() {
 
@@ -67,8 +89,11 @@ render() {
             projection={proj3573}
           >
             <Layers>
-                <RasterLayer source={img} />
                 <TileLayer source={osm()} zIndex={0} />
+                { this.state.wmtsData && 
+                <TileLayer source={this.state.wmtsData} zIndex={0} />}
+                <RasterLayer source={img} />
+
             </Layers>
             <Controls>
               <FullScreenControl />
