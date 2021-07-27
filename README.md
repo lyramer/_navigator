@@ -7,6 +7,7 @@
 
 ## Overview
 
+x
 This project was initially developed Merrick Paquin-Mannington. This current version was built and is maintained by [Andy Wynden](https://www.andywynden.com). The heavy data lifter is Derek Jacoby, who takes the Sentinel-3 data and munches it through a pipeline to produce the imagery rendered in this application.
 
 We used [React-Leaflet](https://react-leaflet.js.org/) as the backbone of this project. Many thanks to the lovely folks at [OSM](https://www.openstreetmap.org) without which our project and Leaflet would not be possible. [ReactStrap](https://reactstrap.github.io/) made it pretty.
