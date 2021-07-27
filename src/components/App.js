@@ -10,6 +10,11 @@ import GeoJSON from "ol/format/GeoJSON";
 import { Controls, FullScreenControl } from "./Controls";
 import FeatureStyles from "./Features/Styles";
 
+import {getCenter} from 'ol/extent'; 
+import {register} from 'ol/proj/proj4';
+import proj4 from 'proj4';
+import {get as getProjection} from 'ol/proj';
+
 import mapConfig from "./DataSources/geojson_data.json";
 import "./App.css";
 
@@ -35,7 +40,15 @@ function addMarkers(lonLatArray) {
   return features;
 }
 
-const newCenter = [-101.608420, 78.447431];
+
+
+proj4.defs("EPSG:3573","+proj=laea +lat_0=90 +lon_0=-100 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs");
+register(proj4);
+const proj3573 = getProjection('EPSG:3573');
+const extent = [-5326849.0625,-5326849.0625,5326849.0625,5326849.0625];
+proj3573.setExtent(extent);
+const newCenter = getCenter(extent);
+
 
 class App extends React.Component {
     constructor(props) {
@@ -93,7 +106,7 @@ render() {
     return (
         <div>
           {/* <Map center={fromLonLat(center)} zoom={zoom}> */}
-          <Map center={fromLonLat(newCenter)} zoom={this.state.zoom}>
+          <Map center={fromLonLat(newCenter)} zoom={this.state.zoom} projection={proj3573}>
             <Layers>
             <TileLayer source={osm()} zIndex={0} />
             { this.state.wmtsData && 
