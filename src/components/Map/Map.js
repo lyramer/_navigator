@@ -3,14 +3,14 @@ import "./Map.css";
 import MapContext from "./MapContext";
 import * as ol from "ol";
 
-const Map = ({ children, zoom, center }) => {
+const Map = ({ children, zoom, center, projection }) => {
 	const mapRef = useRef();
 	const [map, setMap] = useState(null);
 
 	// on component mount
 	useEffect(() => {
 		let options = {
-			view: new ol.View({ zoom, center }),
+			view: new ol.View({ zoom, center, projection }),
 			layers: [],
 			controls: [],
 			overlays: []
