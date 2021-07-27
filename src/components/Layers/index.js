@@ -1,11 +1,11 @@
 import Layers from "./Layers";
 import VectorLayer from "./VectorLayer";
 import TileLayer from "./TileLayer";
-import ImageLayer from "./ImageLayer";
+import RasterLayer from "./RasterLayer";
 
 export {
 	Layers,
 	VectorLayer,
 	TileLayer,
-	ImageLayer
+	RasterLayer
 }
