@@ -51,7 +51,7 @@ const newCenter = [-101.608420, 78.447431];
 //const imgExtent = transform([[-178.85389931430257, 84.6673593606421],[-41.94695494774296, 36.265663798516556]])
 const imgExtent = [[-584160.94, -115096.01], [4896529.62, -3053391.61]]
 const img = new Static({
-  url:"/assets/MAP_IFD_PROB_0.5_CanSIPSv2_NCGR_calibrated_im052021_fcst.png",
+  url:"/assets/im052021_fcstx.png",
   projection: projection,
   imageExtent: imgExtent,
   imageLoadFunction: function (image, src) {
