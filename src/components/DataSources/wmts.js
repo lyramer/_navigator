@@ -10,31 +10,21 @@ import WMTSRequestEncoding from 'ol/source/WMTSRequestEncoding';
 // import {optionsFromCapabilities} from 'ol/source/WMTS';
 
 
-
+// can't figure out how to pass through a proper projection defined
+// in proj4 so it's being instantiated both here and in App. ugh.
 proj4.defs("EPSG:3573","+proj=laea +lat_0=90 +lon_0=-100 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs");
 register(proj4);
-
 const projection = getProjection('EPSG:3573');
 
-// proj4.defs("EPSG:3573","+proj=laea +lat_0=90 +lon_0=-100 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs");
-// register(proj4);
 
-// // // for arcgis WMTS
-// // var projection = getProjection('EPSG:3857');
-// // const ZOOM = 14;
-
-// // for Arctic-SDI WMTS
-// var projection = getProjection('EPSG:3573');
-//projection.setExtent([-2353926.81, 2345724.36, -549965.27 -95984.30]);
 const ZOOM = 18;
 var parser = new WMTSCapabilities();
-
-
 console.log("projection", projection)
 
 async function wmts(text) {
   var result = parser.read(text);
 
+  console.log("result", result);
   var options = optionsFromCapabilities(result, {
     layer: 'arctic_cascading',
     matrixSet: 'EPSG:3573',

@@ -2,11 +2,29 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import NotFound from "./NotFound";
 import App from "./App";
+import { layerDefs } from "../mapConfig";
+import { updateLayers } from "../helpers";
+
+
+const layerRoutes = Object.keys(layerDefs).map(layerID => {
+  let layers = updateLayers(true, "display", layerID, layerDefs);
+  return (
+    <Route key={layerID} exact path={"/"+layerID}
+      render={(props) => (
+        <App {...props} layers={layers} />
+      )}
+    />
+  )
+});
+
 
 const Router = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={App} />
+      <Route exact path="/" render={(props) => (
+                <App {...props} layers={{...layerDefs}} />
+              )} />
+      {layerRoutes}
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>

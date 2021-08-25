@@ -1,108 +1,104 @@
-import React from "react";
-import Map from "./Map";
+import React, {useState, useEffect} from "react";
+import {Map, MapLayer} from "./Map";
 import { Layers, TileLayer, RasterLayer } from "./Layers";
 import Static from 'ol/source/ImageStatic';
 import { osm, vector, wmts } from "./DataSources";
-import { Controls, FullScreenControl } from "./Controls";
-import "./App.css";
+import { Controls, FullScreenControl, ZoomControl } from "./Controls";
+import Panel from "./Panel";
+import "../style/App.scss";
 import Projection from 'ol/proj/Projection'; 
 import {getCenter} from 'ol/extent'; 
 import {register} from 'ol/proj/proj4';
 import proj4 from 'proj4';
 import {get as getProjection} from 'ol/proj';
+import {getActiveLayers, updateLayers} from '../helpers';
+import { options} from '../mapConfig';
 
 
-proj4.defs("EPSG:3573","+proj=laea +lat_0=90 +lon_0=-100 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs");
-register(proj4);
-const proj3573 = getProjection('EPSG:3573');
-// const extent = [-5326849.0625,-5326849.0625,5326849.0625,5326849.0625];
-const extent = [-4209333.51,-5235786.93, 2933382.10, 4619514.19]
-proj3573.setExtent(extent);
-const newCenter = getCenter(extent);
-
-// const img = new Static({
-//   attributions: '© <a href="https://xkcd.com/license.html">xkcd</a>',
-//   url: 'https://imgs.xkcd.com/comics/online_communities.png',
-//   projection: proj3573,
-//   imageExtent: extent,
-// });
-const imgExtentOffset = [
-  -4209333.51 - 1250000,
-  -5235786.93 - 200000, 
-  2933382.10 + 450000, 
-  4619514.19 + 1300000]
-
-
-const imgExtent = [-4209333.51, -5235786.93, 2933382.10, 4619514.19]
-
-const img = new Static({
-  attributions: '© <a href="https://xkcd.com/license.html">xkcd</a>',
-  url:"/assets/im052021_fcst_dataonly.png",
-  //url: 'https://imgs.xkcd.com/comics/online_communities.png',
-  projection: proj3573,
-  imageExtent: imgExtent,
-  // imageSize: [4000,5000]
-  // imageLoadFunction: function (image, src) {
-  //   image.getImage().src = src;
-  //   image.getImage().width = getWidth(imgExtent);;
-  //   image.getImage().height = getHeight(imgExtent);
-  // }
-})
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            center: newCenter,
-            zoom: 4,
-            wmtsData: null,
+            center: options.projCenter,
+            zoom: options.defaultZoom,
+            layers: {...this.props.layers},
         };
+        this.toggleLayer = this.toggleLayer.bind(this);
     }
 
     componentDidMount(){
+      // grab the WMTS data from SDI
       fetch("https://cors-anywhere.herokuapp.com/http://basemap.arctic-sdi.org/mapcache/wmts/?request=GetCapabilities&service=wmts")
           .then(res => res.text())
           .then(async (text) => {
               console.log(text)
               const wmtsData = await wmts(text);
-              this.setState({ wmtsData });
+              console.log("wmtsData", wmtsData)
+              let layers = {...this.state.layers};
+
+              console.log("sdi before", layers.sdi)
+
+              layers = updateLayers(wmtsData, "source", "sdi", layers)
+              layers = updateLayers(true, "display", "sdi", layers)
+
+              console.log("sdi after", layers.sdi)
+
+              this.setState({layers})
           },
-          // Note: it's important to handle errors here
-          // instead of a catch() block so that we don't swallow
-          // exceptions from actual bugs in components.
           (error) => {
           this.setState({
               error
           });
           }
       )
-      
-  }
+    }
+
+    // Used in Panel to toggle layer visibility
+    toggleLayer(layerID, val) {    
+      let layers = this.state.layers;
+      layers[layerID].display = val;
+     this.setState(layers)
+
+    }
 
 render() {
+    const layers = {...this.state.layers};
+    const ActiveLayerList = getActiveLayers(layers).map((id) => 
+        <MapLayer key={id} layer={{id, ...layers[id]}}/>
+    )
 
     return (
-        <div>
-          <Map 
-            center={newCenter} 
-            zoom={this.state.zoom} 
-            projection={proj3573}
-          >
-            <Layers>
-                <TileLayer source={osm()} zIndex={0} />
-                { this.state.wmtsData && 
-                <TileLayer source={this.state.wmtsData} zIndex={0} />}
-                <RasterLayer source={img} />
+      <div className="main">
 
+        <div className="panel-container">
+          <Panel layerList={this.state.layers} onLayerToggle={this.toggleLayer} />
+        </div>
+        
+        <div className="ol-map-container">
+          <Map 
+            center={options.mapCenter} 
+            zoom={this.state.zoom} 
+            projection={options.projection}
+            >
+
+            <Layers>
+                {ActiveLayerList}
             </Layers>
+
             <Controls>
-              <FullScreenControl />
+              <ZoomControl/>
             </Controls>
+
           </Map>
         </div>
+
+      </div>
       );
 }
 
 };
 
 export default App;
+
+

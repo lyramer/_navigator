@@ -1,6 +1,31 @@
+@import './variables';
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background-color: $lowtone;
+}
+
+.main {
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: $main-border;
+  display: flex;
+  flex-flow: row;
+}
+
 body,
 * {
   font-family: "Karla", Arial, sans-serif;
+}
+
+
+h1, h2, h3, h4, h5 {
+  font-family: "Comfortaa", 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .btn:focus,
@@ -14,22 +39,6 @@ body,
   width: 100%;
 }
 
-.leaflet-container {
-  height: 100vh;
-  width: 100%;
-  /* position: relative; */
-}
-
-.leaflet-control-scale-line {
-  border: none;
-  font-size: 18px;
-  border-left: 2px solid white;
-  border-right: 2px solid white;
-  background: transparent none repeat scroll 0% 0%;
-  color: white;
-  box-shadow: none;
-  text-align: center;
-}
 
 .latlon > input {
   width: 100%;
@@ -50,9 +59,7 @@ body,
   font-size: 0.9em;
   padding-bottom: 15px;
 }
-.leaflet-bottom {
-  bottom: 100px;
-}
+
 
 .modal-content {
   color: #e6ebe0;
@@ -102,6 +109,29 @@ body,
 
 .modal p {
   margin-bottom: 25px;
+}
+
+
+.btn-primary {
+  background-color: $primary;
+  border-color: $primary;
+}
+
+.btn-white {
+  background-color: transparent;
+  color: $white;
+  border:none;
+}
+
+.btn-white:hover {
+  background-color: transparent;
+  color: $white;
+  border:none;
+}
+
+.btn-primary:hover {
+  background-color: #83A296;
+  border-color: #83A296;
 }
 
 @media (max-width: 1280px) {

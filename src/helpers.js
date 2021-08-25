@@ -1,21 +1,33 @@
-// for Arctic-SDI WMTS
-import {register} from 'ol/proj/proj4';
-import proj4 from 'proj4';
-import {get as getProjection} from 'ol/proj';
+import {options} from './mapConfig';
 import {transformExtent} from 'ol/proj';
 
 
 
-register(proj4);
-proj4.defs("EPSG:3573","+proj=laea +lat_0=90 +lon_0=-100 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs");
-
-export const projection = getProjection('EPSG:3573');
-
-export function transform(extent) {
-  return transformExtent(extent, 'EPSG:3857', projection);
+// used to transform extents into different projections
+export function transformExt(extent) {
+  return transformExtent(extent, 'EPSG:3857', options.projection);
 }
 
 
+
+// helper to filter out inactive layers and return an array of active layer ID's
+export function getActiveLayers(layers) {
+  return Object.keys(layers).filter((layerID) => layers[layerID].display);
+}
+
+
+// helper to escape the trickiness of copying by reference, especially in loops...
+export function updateLayers(val, propName, layerID, layers) {
+  let layer = {...layers[layerID]}
+  layer[propName] = val;
+  let newLayers = {...layers, [layerID]:layer};
+  return newLayers;
+}
+
+
+//
+// everything below is from AlgaeExplorer and could probably be dumped
+//
 const BLANK_MONTH = {
   1: false,
   2: false,
