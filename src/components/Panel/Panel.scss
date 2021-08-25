@@ -1,0 +1,122 @@
+@import '../../style/variables';
+
+.panel-container {
+    height: 100%;
+    width: 100%;
+    min-width: 250px;
+    max-width: 20%; 
+    margin-right: $main-border;
+    display:flex;
+    flex-flow:column;
+    // background: $hightone;
+    // background: linear-gradient(0deg, rgba(192,192,192,0) 0%, rgba(192,192,192,0.8) 6%, rgba(192,192,192,0.95) 30%, rgba(192,192,192,1) 50%, rgba(192,192,192,0.95) 70%, rgba(192,192,192,0.4) 95%, rgba(192,192,192,0) 100%);
+    // background: linear-gradient(0deg, rgba(152,152,152,0) 0%, rgba(152,152,152,0.3) 85%, rgba(192,192,192,1) 100%);
+}
+
+.panel {
+    height: 100%;
+    width: 100%;
+    border: 1px solid $hightone;
+    border-radius: 2px;
+    color: $white;
+    padding: 10px;
+
+    h1 {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 2.5em;
+        padding-bottom: 2px;
+        position: relative;
+        text-decoration: none;
+        // background: linear-gradient(0deg, rgba(192,192,192,0.3) 0%, rgba(192,192,192,0.5) 50%, rgba(192,192,192,1) 100%);    
+    }
+
+    h1::after {
+        background: $white;
+        background: linear-gradient(to right, transparent 0%, $white 50%, transparent 100%);  
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        width: 100%;
+    }
+
+    h5 {
+        text-align: left;
+        font-size: 1.1em;
+        margin-bottom: 0;
+    }
+
+    h6 {
+        margin-bottom: 0;
+    }
+    
+
+}
+
+
+ .layer-container {
+     color: $secondary;
+     padding: 5px;
+     border: 1px solid $white;
+     border-radius: 2px;
+     background-color: $primary50;
+
+     ul {
+        margin: 0;
+        padding: 0;
+     }
+
+
+    .layer-item {
+        list-style-type: none;
+        font-weight: lighter;
+        padding: 1px 5px;
+
+        .info {
+            color: $secondary;
+            padding: 2px;
+            margin-left: 3px;
+        }
+
+        .toggle {
+            color: $secondary;
+            font-size:1.1em;
+            float:right;
+            position:relative;
+            margin:0;
+            margin-top: 0.5rem;
+        }
+    }
+
+    .active-layers {
+        color: $primary;
+
+        .layer-item {
+            background-color: $primary;
+            color: $secondary;
+        }
+    }
+
+ }
+
+
+
+
+
+
+
+.active-layers .layer-item 
+.layer-item .btn {
+    padding: 0;
+    margin-left: 5px;
+}
+
+
+.layer-label {
+    display: inline-block;
+}
+
