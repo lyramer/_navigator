@@ -36,14 +36,10 @@ class App extends React.Component {
               const wmtsData = await wmts(text);
               console.log("wmtsData", wmtsData)
               let layers = {...this.state.layers};
-
-              console.log("sdi before", layers.sdi)
-
               layers = updateLayers(wmtsData, "source", "sdi", layers)
+
+              // ewwwww
               layers = updateLayers(true, "display", "sdi", layers)
-
-              console.log("sdi after", layers.sdi)
-
               this.setState({layers})
           },
           (error) => {
