@@ -40,6 +40,8 @@ class App extends React.Component {
 
               // ewwwww
               layers = updateLayers(true, "display", "sdi", layers)
+
+
               this.setState({layers})
           },
           (error) => {
@@ -67,9 +69,9 @@ render() {
     return (
       <div className="main">
 
-        <div className="panel-container">
+        {/* <div className="panel-container">
           <Panel layerList={this.state.layers} onLayerToggle={this.toggleLayer} />
-        </div>
+        </div> */}
         
         <div className="ol-map-container">
           <Map 
