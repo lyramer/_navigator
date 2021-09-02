@@ -63,9 +63,11 @@ class App extends React.Component {
 
 render() {
     const layers = {...this.state.layers};
-    const ActiveLayerList = getActiveLayers(layers).map((id) => 
-        <MapLayer key={id} layer={{id, ...layers[id]}}/>
-    )
+    let showColorBar = false;
+    const ActiveLayerList = getActiveLayers(layers).map((id) => {
+      if ( layers[id].colorbar ) showColorBar = true;
+      return <MapLayer key={id} layer={{id, ...layers[id]}}/>
+    })
 
     return (
       <div className="main">
@@ -89,7 +91,7 @@ render() {
               <ZoomControl/>
             </Controls>
 
-            <ColorBar/>
+            {showColorBar && <ColorBar/>}
 
           </Map>
         </div>

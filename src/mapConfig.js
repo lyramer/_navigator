@@ -43,27 +43,31 @@ export const layerDefs = {
       type: 'Tile',
       label: 'OSM',
       source: osm(),
-      display: false
+      display: false,
+      colorbar: false
     },
     sdi: {
       type: 'Tile',
       label: 'Arctic SDI',
       source: null,
-      display: false // don't change this here! change it in app's componentdidupdate
+      display: false, // don't change this here! change it in app's componentdidupdate
+      colorbar: false
     },
     fcst: {
       type: 'Raster',
-      display: false,
       label: 'FCST',
       source: '/assets/im052021_fcst_dataonly.png',
+      display: false,
+      colorbar: true,
       projection: options.projection,
       extent: [-4209333.51, -5235786.93, 2933382.10, 4619514.19]
     },
     fcss: {
       type: 'Raster',
-      display: false,
       label: 'FCSS',
+      display: false,
       source: '/assets/rainbow.png',
+      colorbar: false,
       projection: options.projection,
       extent: [-1000000, -2000000, 1000000, 2000000]
     }
