@@ -2,25 +2,25 @@
 
 - [Overview](#overview)
 - [Build Notes](#build-notes)
+- [Deployment](#Deployment)
 - [Updating With New Map Data](#updating-with-new-map-data)
 - [To Do](#to-do)
 - [Notes](#notes)
 
 ## Overview
 
-This project was built off the backbone of AlgaeExplorer ((Github)[https://github.com/derekja/coaxmap], (Website)[https://algaeexplorer.ca/]. This current version was built and is maintained by [Andy Wynden](https://www.andywynden.com). The heavy data lifter is Derek Jacoby, who has taken visualization scripts developed by (The Surreal Lab)[https://www.surreallab.org/] at UVic, and has made these image products palatable to web applications. 
+This project was built off the backbone of AlgaeExplorer \([Github](https://github.com/derekja/coaxmap), [Website](https://algaeexplorer.ca/)\). This current version was built and is maintained by [Andy Wynden](https://www.andywynden.com). The heavy data lifter is Derek Jacoby, who has taken visualization scripts developed by [The Surreal Lab](https://www.surreallab.org/) at UVic, and has made these image products palatable to web applications. 
 
-We used [OpenLayers](https://openlayers.org/) as the backbone of this project. Many thanks to the lovely folks at [OSM](https://www.openstreetmap.org) without which our project and OpenLayers would not be possible. [ReactStrap](https://reactstrap.github.io/) made it pretty. Special shout out to (Matthew Brown's article on using OL in React)[https://medium.com/swlh/how-to-incorporate-openlayers-maps-into-react-65b411985744].
+We used [OpenLayers](https://openlayers.org/) as the backbone of this project. Many thanks to the lovely folks at [OSM](https://www.openstreetmap.org) without which our project and OpenLayers would not be possible. [ReactStrap](https://reactstrap.github.io/) made it pretty. Special shout out to [Matthew Brown's article on using OL in React](https://medium.com/swlh/how-to-incorporate-openlayers-maps-into-react-65b411985744]).
 
 ## Build Notes
 
 ~~Because the data we get from the ? quarterly ? processing of images from Compute Canada is in a seperate folder, I've created a script which re-creates the symlink to this folder inside the build folder. This means that **during deployment on the server, use npm run server-build**. On your local machine, running npm run build is just fine as you'll need to import a handful of overlays so that map data shows up properly.~~
+
 *Note that this has changed to simply providing the image path (which does not use a symlink) in the src/mapConfig file. We may want to implement an automatic processing pipeline for new images, so I am leaving this particular quirk in place for the moment. If you want to add a new image manually, see the [Updating With New Map Data](#updating-with-new-map-data) section.*
 
 
-
-
-## deployment
+## Deployment
 
 server deployment consists of sync'ing the project on the server, then running server-build as above. The next step is to add a proxy-pass statement to your nginx server block for each route in the API on the server side. http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass
 
@@ -33,8 +33,8 @@ make sure libnetcdf-dev is on the server per instructions here: https://www.npmj
 #### Background
 Due to the need for A/B testing between different types of visualizations, all of the layers are defined in a dictionary-style object found in src/mapConfig.js. This layerDef object consists of key/value pairs, where the key is the id for the map layer type (eg osm, sdi, etc), and the value is an object which contains the properties:
 
-```json
-    [yourID]
+```
+    [*yourID*]
       type: ['Raster'|'Tile'],
       label: ['Label'],
       source: ['/path/to/img.png'],
