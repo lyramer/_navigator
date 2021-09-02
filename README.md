@@ -33,7 +33,7 @@ make sure libnetcdf-dev is on the server per instructions here: https://www.npmj
 #### Background
 Due to the need for A/B testing between different types of visualizations, all of the layers are defined in a dictionary-style object found in src/mapConfig.js. This layerDef object consists of key/value pairs, where the key is the id for the map layer type (eg osm, sdi, etc), and the value is an object which contains the properties:
 
-<code>
+```
     [*yourID*]
       type: [*'Raster'*|*'Tile'*],
       label: [*'yourHumanReadableLabel'*],
@@ -41,8 +41,8 @@ Due to the need for A/B testing between different types of visualizations, all o
       display: [*Boolean*],
       colorbar: [*Boolean*], // would need to become a link to file if we get fancy
       projection [*raster type only*]: [*options.projection*| *your custom proj4 projection*],
-      extent [*raster type only*]: [*minx, miny, maxx, maxy*]
-</code>
+      extent [<i>raster type only</i>]: [*minx, miny, maxx, maxy*]
+```
 
 
 
