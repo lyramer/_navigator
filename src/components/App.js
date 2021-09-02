@@ -71,9 +71,9 @@ render() {
     return (
       <div className="main">
 
-        <div className="panel-container">
+        {/* <div className="panel-container">
           <Panel layerList={this.state.layers} onLayerToggle={this.toggleLayer} />
-        </div>
+        </div> */}
         
         <div className="ol-map-container">
           <Map 
