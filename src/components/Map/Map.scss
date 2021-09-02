@@ -3,15 +3,22 @@
 
 .ol-map {  
     height: 100%;
-    background-color: #fff;
+    width: 100%;
+    background-color: $hightone;
 }
 
 .ol-map-container {
     width: 100%;
-    // padding: 8px;
+    height: 100%;
+    display:flex;
+    flex-direction:row;
+    border: 2px solid $hightone;
+    border-radius: 2px;
+    background-color: $lowtone;
 }
 
 .ol-full-screen {  
     top: .5em;  
     right: .5em;
 }
+

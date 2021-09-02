@@ -1,11 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { Button } from "reactstrap";
 
 const NotFound = () => (
-  <div>
-    <h2>Not Found!@!!</h2>
-
-    If it is curDates.txt you are looking for, please put the OLCI folder (or a fragment thereof) in the public directory before building.
-  </div>
+    <div className="not-found">
+      <div>
+        <div className="error-outline">
+          <h2 class="error">Oops! Page Not Found!</h2>
+          <Link className="btn" to="/">Return Home</Link>
+        </div>
+      </div>
+    </div>
 );
 
 export default NotFound;

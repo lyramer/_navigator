@@ -1,8 +1,10 @@
 @import '../../style/variables';
 
+.colorbar {
+    height: 100%;
+}
+
 .colorbar img {
-    max-height: calc(100% - 20px);
-    position:absolute;
-    z-index:3;
-    right: 10px;
+    height: 100%;
+    vertical-align:0;
 }

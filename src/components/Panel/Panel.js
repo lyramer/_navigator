@@ -4,21 +4,23 @@ import "./Panel.scss";
 
 const Panel = (props) => {
 	return (
-		<div className="panel">
-			<h1>Polaris</h1>
-			<h5>Data Layers</h5>
-			<div className="layer-container">
-				{LayerList(props.layerList, props.onLayerToggle)}
-				{/* <div className="active-layers">
-					<ul>
-					{ActiveLayerList(props.layerList, props.onLayerToggle)}
-					</ul>
+		<div className="panel-container">
+			<div className="panel">
+				<h1>Polaris</h1>
+				<h5>Data Layers</h5>
+				<div className="layer-container">
+					{LayerList(props.layerList, props.onLayerToggle)}
+					{/* <div className="active-layers">
+						<ul>
+						{ActiveLayerList(props.layerList, props.onLayerToggle)}
+						</ul>
+					</div>
+					<div className="inactive-layers">
+						<ul>
+						{InactiveLayerList(props.layerList, props.onLayerToggle)}
+						</ul>
+					</div> */}
 				</div>
-				<div className="inactive-layers">
-					<ul>
-					{InactiveLayerList(props.layerList, props.onLayerToggle)}
-					</ul>
-				</div> */}
 			</div>
 		</div>
 	)

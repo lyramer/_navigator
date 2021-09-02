@@ -9,18 +9,18 @@ body {
   background-color: $lowtone;
 }
 
-.main {
+body,
+* {
+  font-family: "Karla", Arial, sans-serif;
+}
+
+#root {
   height: 100vh;
   width: 100%;
   margin: 0;
   padding: $main-border;
   display: flex;
   flex-flow: row;
-}
-
-body,
-* {
-  font-family: "Karla", Arial, sans-serif;
 }
 
 
@@ -33,31 +33,44 @@ h1, h2, h3, h4, h5 {
   box-shadow: none;
 }
 
-.mapContainer {
-  height: 100vh;
-  /* width: calc(100% - 70px); */
+.not-found {
+  background: $hightone;
   width: 100%;
+  text-align: center;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
 }
 
+// for Router 'Link' components with the classname 'btn'
+a.btn {
+  border: 3px solid $primary;
+  background: $primary25;
+  color: $lowtone;
+  font-weight:bold;
+  padding: 10px 50px;
 
-.latlon > input {
-  width: 100%;
-}
-
-.add-pin i {
-  font-size: 0.7em;
-  padding-left: 8px;
+  &:hover {
+    background: $primary75;
+  }
 }
 
 .error {
-  color: #e6ebe0;
+  color: $error;
   font-weight: bold;
   text-shadow: none;
 }
 
-.latlon-modal .error {
-  font-size: 0.9em;
-  padding-bottom: 15px;
+.error-outline {
+  border:3px solid $error;
+  padding: 100px;
+  display: inline-block;
+
+  h2 {
+    margin-bottom: 20px;
+  }
 }
 
 
@@ -76,10 +89,6 @@ h1, h2, h3, h4, h5 {
   box-shadow: none;
 }
 
-.leaflet-fade-anim .leaflet-tile,
-.leaflet-zoom-anim .leaflet-zoom-animated {
-  will-change: auto !important;
-}
 .modal-body .logos {
   display: flex;
   justify-content: space-around;
@@ -132,16 +141,4 @@ h1, h2, h3, h4, h5 {
 .btn-primary:hover {
   background-color: #83A296;
   border-color: #83A296;
-}
-
-@media (max-width: 1280px) {
-  .leaflet-bottom {
-    bottom: 120px;
-  }
-}
-
-@media (max-width: 768px) {
-  .leaflet-bottom {
-    bottom: 80px;
-  }
 }
