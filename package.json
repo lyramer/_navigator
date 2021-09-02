@@ -8,8 +8,6 @@
     "cors-anywhere": "^0.4.4",
     "express": "^4.17.1",
     "http-proxy-middleware": "^2.0.0",
-    "leaflet": "^1.7.1",
-    "leaflet-spin": "^1.1.0",
     "ol": "^6.5.0",
     "proj4": "^2.7.2",
     "proj4leaflet": "^1.0.2",
@@ -20,7 +18,6 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "4.0.3",
     "react-sizes": "^2.0.0",
-    "react-tiny-spin": "^0.6.5",
     "reactstrap": "^6.4.0"
   },
   "devDependencies": {
