@@ -24,7 +24,7 @@ const RasterLayer = ({ source, style, zIndex = 2 }) => {
 				map.removeLayer(imgLayer);
 			}
 		};
-	}, [map]);
+	}, [map, source]);
 
 	return null;
 };

@@ -19,19 +19,15 @@ const projection = getProjection('EPSG:3573');
 
 const ZOOM = 18;
 var parser = new WMTSCapabilities();
-console.log("projection", projection)
 
 async function wmts(text) {
   var result = parser.read(text);
-
-  console.log("result", result);
   var options = optionsFromCapabilities(result, {
     layer: 'arctic_cascading',
     matrixSet: 'EPSG:3573',
     projection
   });
 
-  console.log("options", options)
   return new olSource.WMTS(options);
 
 

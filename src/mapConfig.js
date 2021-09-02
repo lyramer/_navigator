@@ -50,7 +50,7 @@ export const layerDefs = {
       type: 'Tile',
       label: 'Arctic SDI',
       source: null,
-      display: false, // don't change this here! change it in app's componentdidupdate
+      display: true, 
       colorbar: false
     },
     fcst: {
