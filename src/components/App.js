@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {Map, MapLayer} from "./Map";
+import {ColorBar} from "./Features";
 import { Layers, TileLayer, RasterLayer } from "./Layers";
 import Static from 'ol/source/ImageStatic';
 import { osm, vector, wmts } from "./DataSources";
@@ -87,6 +88,8 @@ render() {
             <Controls>
               <ZoomControl/>
             </Controls>
+
+            <ColorBar/>
 
           </Map>
         </div>

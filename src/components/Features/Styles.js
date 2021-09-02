@@ -1,6 +1,6 @@
 import { Circle as CircleStyle, Fill, Stroke, Style } from "ol/style";
 
-export default {
+const Styles = {
   Point: new Style({
     image: new CircleStyle({
       radius: 10,
@@ -30,3 +30,5 @@ export default {
     }),
   }),
 };
+
+export default Styles;
