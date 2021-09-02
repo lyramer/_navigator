@@ -11,7 +11,7 @@ const layerRoutes = Object.keys(layerDefs).map(layerID => {
   return (
     <Route key={layerID} exact path={"/"+layerID}
       render={(props) => (
-        <App {...props} layers={layers} />
+        <App {...props} layers={layers} showPanel={false}/>
       )}
     />
   )
@@ -22,7 +22,7 @@ const Router = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/" render={(props) => (
-                <App {...props} layers={{...layerDefs}} />
+                <App {...props} layers={{...layerDefs}} showPanel={true}/>
               )} />
       {layerRoutes}
       <Route component={NotFound} />

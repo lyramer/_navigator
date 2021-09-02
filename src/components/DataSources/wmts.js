@@ -166,16 +166,12 @@ function optionsFromCapabilities(wmtsCap, config) {
   }
   var matrixSets = wmtsCap['Contents']['TileMatrixSet'];
 
-  console.log("matrixSets", matrixSets);
-  console.log("matrixSet", matrixSet);
-
   var matrixSetObj = matrixSets.find(function (elt, index, array) {
       return elt['Identifier'] == matrixSet;
   });
   var projection;
   var code = matrixSetObj['SupportedCRS'];
 
-  console.log("getProjection(code)", getProjection(code))
 
   if (code) {
       projection = getProjection(code);

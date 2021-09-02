@@ -16,9 +16,6 @@ const RasterLayer = ({ source, style, zIndex = 2 }) => {
 		map.addLayer(imgLayer);
 		imgLayer.setZIndex(zIndex);
 
-
-		console.log("getLayers", map.getLayers())
-
 		return () => {
 			if (map) {
 				map.removeLayer(imgLayer);

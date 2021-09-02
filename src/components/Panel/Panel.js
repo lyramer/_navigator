@@ -64,10 +64,6 @@ const LayerItem = (layer, onToggle) => {
 				id={"toggle_" + layer.id} 
 				checked={layer.display}
 				onChange={(e) => onToggle(layer.id, e.target.checked)}/>
-			{/* <Button className="toggle" color="white" id={"toggle_" + layer.id} onClick={(e) => console.log(e)}>
-				{layer.display && <i className='fas fa-times-circle'></i> || <i className='fas fa-plus-circle'></i>}
-			</Button> */}
-
 		</li>
 	)
 }

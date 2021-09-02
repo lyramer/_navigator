@@ -1,6 +1,6 @@
 import React from "react";
 import {Map, MapLayer} from "./Map";
-import {ColorBar} from "./Features";
+import { ColorBar } from "./Features";
 import { Layers } from "./Layers";
 import { wmts } from "./DataSources";
 import { Controls, ZoomControl } from "./Controls";
@@ -27,9 +27,7 @@ class App extends React.Component {
       fetch("https://cors-anywhere.herokuapp.com/http://basemap.arctic-sdi.org/mapcache/wmts/?request=GetCapabilities&service=wmts")
           .then(res => res.text())
           .then(async (text) => {
-              console.log(text)
               const wmtsData = await wmts(text);
-              console.log("wmtsData", wmtsData)
               let layers = {...this.state.layers};
               layers = updateLayers(wmtsData, "source", "sdi", layers)
               this.setState({layers})
@@ -62,7 +60,7 @@ render() {
         
       <div className="ol-map-container">
 
-          {/* <Panel layerList={this.state.layers} onLayerToggle={this.toggleLayer} /> */}
+          {this.props.showPanel && <Panel layerList={this.state.layers} onLayerToggle={this.toggleLayer} />}
 
           <Map 
             center={options.mapCenter} 

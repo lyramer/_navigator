@@ -6,10 +6,8 @@ const TileLayer = ({ source, zIndex = 0 }) => {
 	const { map } = useContext(MapContext);
 
 	useEffect(() => {
-		console.log("useEffect called", source)
 		
 		if (!map) return;
-		console.log("tile layer created")
 
 		let tileLayer = new OLTileLayer({
 			source,
@@ -21,7 +19,6 @@ const TileLayer = ({ source, zIndex = 0 }) => {
 
 		return () => {
 			if (map) {
-				console.log("tilelayer removed")
 				map.removeLayer(tileLayer);
 			}
 		};
