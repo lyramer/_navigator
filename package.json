@@ -8,6 +8,7 @@
     "cors-anywhere": "^0.4.4",
     "express": "^4.17.1",
     "http-proxy-middleware": "^2.0.0",
+    "node-sass": "^6.0.1",
     "ol": "^6.5.0",
     "proj4": "^2.7.2",
     "proj4leaflet": "^1.0.2",
@@ -18,10 +19,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "4.0.3",
     "react-sizes": "^2.0.0",
-    "reactstrap": "^6.4.0"
-  },
-  "devDependencies": {
-    "node-sass": "^6.0.1",
+    "reactstrap": "^6.4.0",
     "sass-loader": "^12.1.0"
   },
   "scripts": {
